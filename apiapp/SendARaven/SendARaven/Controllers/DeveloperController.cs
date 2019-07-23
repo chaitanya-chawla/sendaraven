@@ -20,6 +20,11 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         public RegistrationResponse GetByTenantId(String tenantId)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
             return new RegistrationResponse();
         }
 
@@ -27,8 +32,13 @@ namespace SendARaven.Controllers
         [SwaggerOperation("Register")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpPost]
-        public RegistrationResponse Register([FromBody]RegistrationRequest request)
+        public RegistrationResponse Register( [FromBody]DeveloperRegistrationRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
             return new RegistrationResponse();
         }
 
