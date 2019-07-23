@@ -109,7 +109,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"my email\",\n\t\"type\": \"email\",\n\t\"templateId\": \"sendraven://sendgrid\",\n\t\"endpointType\": \"http\",\n\t\n\t\"cfg\": \n\t\t{\n\t\t\t\"apiKey\": \"abcd\",\n\t\t\t\"fromEmail\": \"abc@ok.com\"\n\t\t},\n\t\t\n\t\"templatEndpoint\": \"https://sendgrid.com/v1/\",\n\t\"templateHeader\":\n\t\t{\n\t\t\t\"api-key\": \"apiKey\"\n\t\t},\n\t\"templatBody\": \"{ 'a': '${apiKey}'}\"\n\t\n}"
+					"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    },\n    \"templateEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n    \"templateHeader\": {\n        \"authkey\": \"${apiKey}\",\n        \"content-type\": \"application/json\"\n    },\n    \"templateBody\": \"{ \\\"sender\\\": \\\"${sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${sms-msg}\\\", \\\"to\\\": [ \\\"${mobile-number}\\\"] } ] }\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost/v1/channel/reg",
@@ -149,7 +149,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my sms\",\n\t\"type\": \"sms-t\",\n\t\"templateId\": \"sendraven://msg91\",\n\t\"endpointType\": \"http\",\n\t\n\t\"cfg\": \n\t\t{\n\t\t\t\"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n\t\t\t\"sender\": \"Raven\"\n\t\t},\n\t\t\n\t\"templatEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n\t\"templateHeader\":\n\t\t{\n\t\t\t\"authkey\": \"${apiKey}\",\n\t\t\t\"content-type\": \"application/json\"\n\t\t},\n\t\"templatBody\": \"{ \\\"sender\\\": \\\"${sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${sms-msg}\\\", \\\"to\\\": [ \\\"${mobile-number}\\\"] } ] }\"\n\t\n}"
+							"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    },\n    \"templateEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n    \"templateHeader\": {\n        \"authkey\": \"${apiKey}\",\n        \"content-type\": \"application/json\"\n    },\n    \"templateBody\": \"{ \\\"sender\\\": \\\"${sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${sms-msg}\\\", \\\"to\\\": [ \\\"${mobile-number}\\\"] } ] }\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost/v1/channel/reg",
@@ -193,7 +193,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my email\",\n\t\"type\": \"email\",\n\t\"templateId\": \"sendraven://sendgrid\",\n\t\"endpointType\": \"http\",\n\t\n\t\"cfg\": \n\t\t{\n\t\t\t\"apiKey\": \"abcd\",\n\t\t\t\"fromEmail\": \"abc@ok.com\"\n\t\t},\n\t\t\n\t\"templatEndpoint\": \"https://sendgrid.com/v1/\",\n\t\"templateHeader\":\n\t\t{\n\t\t\t\"api-key\": \"${apiKey}\"\n\t\t},\n\t\"templatBody\": \"{ 'a': '${apiKey}'}\"\n\t\n}"
+							"raw": "{\n\t\"name\": \"my email\",\n\t\"type\": \"email\",\n\t\"templateId\": \"sendraven://sendgrid\",\n\t\"endpointType\": \"http\",\n\t\n\t\"cfg\": \n\t\t{\n\t\t\t\"apiKey\": \"abcd\",\n\t\t\t\"fromEmail\": \"abc@ok.com\"\n\t\t},\n\t\t\n\t\"templateEndpoint\": \"https://sendgrid.com/v1/\",\n\t\"templateHeader\":\n\t\t{\n\t\t\t\"api-key\": \"${apiKey}\"\n\t\t},\n\t\"templateBody\": \"{ 'a': '${apiKey}'}\"\n\t\n}"
 						},
 						"url": {
 							"raw": "http://localhost/v1/channel/reg",
