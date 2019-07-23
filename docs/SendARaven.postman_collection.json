@@ -108,7 +108,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    },\n    \"templateEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n    \"templateHeader\": {\n        \"authkey\": \"${cfg.apiKey}\",\n        \"content-type\": \"application/json\"\n    },\n    \"templateBody\": \"{ \\\"sender\\\": \\\"${cfg.sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${req-usr.mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${req.sms-msg}\\\", \\\"to\\\": [ \\\"${req-usr.mobile-number}\\\"] } ] }\"\n}"
+					"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    },\n    \n    \"templateEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n    \"endpointType\": \"http\",\n    \"templateHeader\": {\n        \"authkey\": \"${cfg.apiKey}\",\n        \"content-type\": \"application/json\"\n    },\n    \"templateBody\": \"{ \\\"sender\\\": \\\"${cfg.sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${req-usr.mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${req.sms-msg}\\\", \\\"to\\\": [ \\\"${req-usr.mobile-number}\\\"] } ] }\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost/v1/channel",
@@ -147,7 +147,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    },\n    \"templateEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n    \"templateHeader\": {\n        \"authkey\": \"${cfg.apiKey}\",\n        \"content-type\": \"application/json\"\n    },\n    \"templateBody\": \"{ \\\"sender\\\": \\\"${cfg.sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${req-usr.mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${req.sms-msg}\\\", \\\"to\\\": [ \\\"${req-usr.mobile-number}\\\"] } ] }\"\n}"
+							"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    },\n    \n    \"templateEndpoint\": \"https://api.msg91.com/api/v2/sendsms?country=${mobile-countrycode}\",\n    \"endpointType\": \"http\",\n    \"templateHeader\": {\n        \"authkey\": \"${cfg.apiKey}\",\n        \"content-type\": \"application/json\"\n    },\n    \"templateBody\": \"{ \\\"sender\\\": \\\"${cfg.sender}\\\", \\\"route\\\": \\\"4\\\", \\\"country\\\": \\\"${req-usr.mobile-countrycode}\\\", \\\"sms\\\": [ { \\\"message\\\": \\\"${req.sms-msg}\\\", \\\"to\\\": [ \\\"${req-usr.mobile-number}\\\"] } ] }\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost/v1/channel",
@@ -190,7 +190,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my email\",\n\t\"type\": \"email\",\n\t\"templateId\": \"sendraven://sendgrid\",\n\t\"endpointType\": \"http\",\n\t\n\t\"cfg\": \n\t\t{\n\t\t\t\"apiKey\": \"abcd\",\n\t\t\t\"fromEmail\": \"abc@ok.com\"\n\t\t},\n\t\t\n\t\"templateEndpoint\": \"https://sendgrid.com/v1/\",\n\t\"templateHeader\":\n\t\t{\n\t\t\t\"api-key\": \"${cfg.apiKey}\"\n\t\t},\n\t\"templateBody\": \"{ 'a': '${cfg.apiKey}'}\"\n\t\n}"
+							"raw": "{\n\t\"name\": \"my email\",\n\t\"type\": \"email\",\n\t\"templateId\": \"sendraven://sendgrid\",\n\t\"cfg\": \n\t\t{\n\t\t\t\"apiKey\": \"abcd\",\n\t\t\t\"fromEmail\": \"abc@ok.com\"\n\t\t},\n\t\n\t\"endpointType\": \"http\",\t\n\t\"templateEndpoint\": \"https://sendgrid.com/v1/\",\n\t\"templateHeader\":\n\t\t{\n\t\t\t\"api-key\": \"${cfg.apiKey}\"\n\t\t},\n\t\"templateBody\": \"{ 'a': '${cfg.apiKey}'}\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost/v1/channel",
@@ -399,7 +399,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"904bf367-47bd-4c3f-8e16-e5481cafdd95\",\n\t\"subject\": \"hello\",\n\t\"text-body\": \"world\",\n\t\"html-body\": \"world\",\n\t\n\t\"to\":\n\t\t{\n\t\t\t\"userId\": \"\",\n\t\t\t\"attributes\":\n\t\t\t\t{\n\t\t\t\t\t\"city\": \"Bangalore\"\n\t\t\t\t},\n\t\t\t\"channel\": \"*\",\n\t\t\t\"guest\":\n\t\t\t\t[\n\t\t\t\t\t{\n\t\t\t\t\t\"channelName\": \"my email\",\n\t\t\t\t\t\"channelType\": \"email\",\n\t\t    \t\t\"channelId\": \"abc@xyz.com\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t}\n}"
+					"raw": "{\n\t\"subject\": \"hello\",\n\t\"text-body\": \"hello ${usr.firstName}\",\n\t\"html-body\": \"<h2>hello ${usr.firstName}</h2>\",\n\t\n\t\"to\":\n\t\t{\n\t\t\t\"userId\": \"\",\n\t\t\t\"attributes\":\n\t\t\t\t{\n\t\t\t\t\t\"city\": \"Bangalore\"\n\t\t\t\t},\n\t\t\t\"channelType\": [\"*\", \"email\", \"sms-t\"],\n\t\t\t\"channelNameMap\": \n\t\t\t\t{\n\t\t\t\t\t\"email\": \"my email\",\n\t\t\t\t\t\"sms-t\": \"sms t\"\n\t\t\t\t},\n\t\t\t\n\t\t\t\"guest\":\n\t\t\t\t[\n\t\t\t\t\t{\n\t\t\t\t\t\"channelName\": \"my email\",\n\t\t\t\t\t\"channelType\": \"email\",\n\t\t    \t\t\"channelId\": \"abc@xyz.com\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t}\n}"
 				},
 				"url": {
 					"raw": "http://localhost/v1/msg",
