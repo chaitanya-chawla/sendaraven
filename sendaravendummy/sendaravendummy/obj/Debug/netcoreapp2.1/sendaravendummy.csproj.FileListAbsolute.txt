@@ -1,0 +1,11 @@
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\bin\Debug\netcoreapp2.1\sendaravendummy.deps.json
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\bin\Debug\netcoreapp2.1\sendaravendummy.runtimeconfig.json
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\bin\Debug\netcoreapp2.1\sendaravendummy.runtimeconfig.dev.json
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\bin\Debug\netcoreapp2.1\sendaravendummy.dll
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\obj\Debug\netcoreapp2.1\sendaravendummy.csprojAssemblyReference.cache
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\obj\Debug\netcoreapp2.1\sendaravendummy.csproj.CoreCompileInputs.cache
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\obj\Debug\netcoreapp2.1\sendaravendummy.AssemblyInfoInputs.cache
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\obj\Debug\netcoreapp2.1\sendaravendummy.AssemblyInfo.cs
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\bin\Debug\netcoreapp2.1\sendaravendummy.pdb
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\obj\Debug\netcoreapp2.1\sendaravendummy.dll
+C:\Users\chchawla\source\repos\sendaravendummy\sendaravendummy\obj\Debug\netcoreapp2.1\sendaravendummy.pdb
