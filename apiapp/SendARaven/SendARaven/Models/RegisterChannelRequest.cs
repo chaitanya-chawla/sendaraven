@@ -15,18 +15,14 @@ namespace SendARaven.Models
         [Required]
         public String type { get; set; }
 
+        [Required]
         public String templateId { get; set; }
 
+        [Required]
         public String endpointType { get; set; }
 
         [Required]
         public Dictionary<String, Object> cfg { get; set; }
 
-        public String templateEndpoint { get; set; }
-
-        [Required]
-        public Dictionary<String, Object> templateHeader { get; set; }
-
-        public String templateBody { get; set; }
     }
 }

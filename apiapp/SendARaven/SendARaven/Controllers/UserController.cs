@@ -11,14 +11,19 @@ namespace SendARaven.Controllers
     using System.Web.Services.Protocols;
     using Models;
 
+
+    /**
+    * Note @{BaseURl} = /v1/api/user
+    */
     public class UserController : ApiController
     {
 
-        // GET api/values/5
+        // GET /v1/api/user/GetByUserId
         [SwaggerOperation("GetByUserId")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public RegisterUserRequest GetByUserId(String userId)
+        [HttpGet]
+        public RegisterUserRequest GetByUserId(String id)
         {
             if (!ModelState.IsValid)
             {
@@ -28,10 +33,24 @@ namespace SendARaven.Controllers
             return new RegisterUserRequest();
         }
 
-        // POST api/values
-        [SwaggerOperation("Post")]
+        // POST /v1/api/user/Register/
+        [SwaggerOperation("Register")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public void Post([FromBody]RegisterUserRequest request)
+        [HttpPost]
+        public void Register([FromBody]RegisterUserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+        }
+
+        // POST /v1/api/user/channelRegister/
+        [SwaggerOperation("channelRegister")]
+        [SwaggerResponse(HttpStatusCode.Created)]
+        [HttpPost]
+        public void RegisterChannel([FromBody] RegisterUserChannelRequest request)
         {
             if (!ModelState.IsValid)
             {

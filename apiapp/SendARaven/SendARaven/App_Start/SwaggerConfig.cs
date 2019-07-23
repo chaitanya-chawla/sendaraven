@@ -20,11 +20,12 @@ namespace SendARaven
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                     {
+                       
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                         //
-                        //c.RootUrl(req => GetRootUrlFromAppConfig());
+                        //                       c.RootUrl(req => GetRootUrlFromAppConfig());
 
                         // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
@@ -187,61 +188,63 @@ namespace SendARaven
                         //
                         //c.CustomProvider((defaultProvider) => new CachingSwaggerProvider(defaultProvider));
                         // ***** Uncomment the following to enable the swagger UI *****
-                        /*
+                    
                             })
                         .EnableSwaggerUi(c =>
                             {
-                        */
-                        // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
-                        // The file must be included in your project as an "Embedded Resource", and then the resource's
-                        // "Logical Name" is passed to the method as shown below.
-                        //
-                        //c.InjectStylesheet(containingAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testStyles1.css");
 
-                        // Use the "InjectJavaScript" option to invoke one or more custom JavaScripts after the swagger-ui
-                        // has loaded. The file must be included in your project as an "Embedded Resource", and then the resource's
-                        // "Logical Name" is passed to the method as shown above.
-                        //
-                        //c.InjectJavaScript(thisAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testScript1.js");
+                                // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
+                                // The file must be included in your project as an "Embedded Resource", and then the resource's
+                                // "Logical Name" is passed to the method as shown below.
+                                //
+                                //c.InjectStylesheet(containingAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testStyles1.css");
 
-                        // The swagger-ui renders boolean data types as a dropdown. By default, it provides "true" and "false"
-                        // strings as the possible choices. You can use this option to change these to something else,
-                        // for example 0 and 1.
-                        //
-                        //c.BooleanValues(new[] { "0", "1" });
+                                // Use the "InjectJavaScript" option to invoke one or more custom JavaScripts after the swagger-ui
+                                // has loaded. The file must be included in your project as an "Embedded Resource", and then the resource's
+                                // "Logical Name" is passed to the method as shown above.
+                                //
+                                //c.InjectJavaScript(thisAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testScript1.js");
 
-                        // By default, swagger-ui will validate specs against swagger.io's online validator and display the result
-                        // in a badge at the bottom of the page. Use these options to set a different validator URL or to disable the
-                        // feature entirely.
-                        //c.SetValidatorUrl("http://localhost/validator");
-                        //c.DisableValidator();
+                                // The swagger-ui renders boolean data types as a dropdown. By default, it provides "true" and "false"
+                                // strings as the possible choices. You can use this option to change these to something else,
+                                // for example 0 and 1.
+                                //
+                                //c.BooleanValues(new[] { "0", "1" });
 
-                        // Use this option to control how the Operation listing is displayed.
-                        // It can be set to "None" (default), "List" (shows operations for each resource),
-                        // or "Full" (fully expanded: shows operations and their details).
-                        //
-                        //c.DocExpansion(DocExpansion.List);
+                                // By default, swagger-ui will validate specs against swagger.io's online validator and display the result
+                                // in a badge at the bottom of the page. Use these options to set a different validator URL or to disable the
+                                // feature entirely.
+                                //c.SetValidatorUrl("http://localhost/validator");
+                                //c.DisableValidator();
 
-                        // Use the CustomAsset option to provide your own version of assets used in the swagger-ui.
-                        // It's typically used to instruct Swashbuckle to return your version instead of the default
-                        // when a request is made for "index.html". As with all custom content, the file must be included
-                        // in your project as an "Embedded Resource", and then the resource's "Logical Name" is passed to
-                        // the method as shown below.
-                        //
-                        //c.CustomAsset("index", containingAssembly, "YourWebApiProject.SwaggerExtensions.index.html");
+                                // Use this option to control how the Operation listing is displayed.
+                                // It can be set to "None" (default), "List" (shows operations for each resource),
+                                // or "Full" (fully expanded: shows operations and their details).
+                                //
+                                //c.DocExpansion(DocExpansion.List);
 
-                        // If your API has multiple versions and you've applied the MultipleApiVersions setting
-                        // as described above, you can also enable a select box in the swagger-ui, that displays
-                        // a discovery URL for each version. This provides a convenient way for users to browse documentation
-                        // for different API versions.
-                        //
-                        //c.EnableDiscoveryUrlSelector();
+                                // Use the CustomAsset option to provide your own version of assets used in the swagger-ui.
+                                // It's typically used to instruct Swashbuckle to return your version instead of the default
+                                // when a request is made for "index.html". As with all custom content, the file must be included
+                                // in your project as an "Embedded Resource", and then the resource's "Logical Name" is passed to
+                                // the method as shown below.
+                                //
+                                //c.CustomAsset("index", containingAssembly, "YourWebApiProject.SwaggerExtensions.index.html");
 
-                        // If your API supports the OAuth2 Implicit flow, and you've described it correctly, according to
-                        // the Swagger 2.0 specification, you can enable UI support as shown below.
-                        //
-                        //c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
-                    });
+                                // If your API has multiple versions and you've applied the MultipleApiVersions setting
+                                // as described above, you can also enable a select box in the swagger-ui, that displays
+                                // a discovery URL for each version. This provides a convenient way for users to browse documentation
+                                // for different API versions.
+                                //
+                                //c.EnableDiscoveryUrlSelector();
+
+                                // If your API supports the OAuth2 Implicit flow, and you've described it correctly, according to
+                                // the Swagger 2.0 specification, you can enable UI support as shown below.
+                                //
+                                //c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
+                               
+                               
+                            });
         }
     }
 

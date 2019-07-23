@@ -10,36 +10,40 @@ namespace SendARaven.Controllers
 {
     using System.Web.Services.Protocols;
     using Models;
+    using Swashbuckle.Application;
 
+    /**
+     * Note @{BaseURl} = /v1/api/developer
+     */
     public class DeveloperController : ApiController
     {
 
-        // GET api/values/5
+        // GET /v1/api/developer/GetByTenantId/
         [SwaggerOperation("GetByTenantId")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public RegistrationResponse GetByTenantId(String tenantId)
+        public DeveloperRegisterEntity GetByTenantId(String tenantId)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new RegistrationResponse();
+            return new DeveloperRegisterEntity();
         }
 
-        // POST api/values
+        // POST /v1/api/developer
         [SwaggerOperation("Register")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpPost]
-        public RegistrationResponse Register( [FromBody]DeveloperRegistrationRequest request)
+        public DeveloperRegisterEntity Register( [FromBody]ResisterDeveloperRequest request)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new RegistrationResponse();
+            return new DeveloperRegisterEntity();
         }
 
     }
