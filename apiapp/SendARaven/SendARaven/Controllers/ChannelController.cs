@@ -8,36 +8,48 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace SendARaven.Controllers
 {
+    using System.Collections;
     using System.Web.Services.Protocols;
     using Models;
 
-    public class UserController : ApiController
+    public class ChannelController : ApiController
     {
 
         // GET api/values/5
-        [SwaggerOperation("GetByUserId")]
+        [SwaggerOperation("GetByChannelId")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public RegisterUserRequest GetByUserId(String userId)
+        public RegisterChannel GetByUserId(String channelId)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new RegisterUserRequest();
+            return new RegisterChannel();
         }
 
         // POST api/values
         [SwaggerOperation("Post")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public void Post([FromBody]RegisterUserRequest request)
+        public RegisterChannel Post([FromBody]RegisterChannelRequest request)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
+            return new RegisterChannel();
+        }
+
+
+        // POST api/values
+        [SwaggerOperation("List")]
+        [SwaggerResponse(HttpStatusCode.Created)]
+        [HttpGet]
+        public List<RegisterChannel> List()
+        {
+            return null;
         }
 
     }
