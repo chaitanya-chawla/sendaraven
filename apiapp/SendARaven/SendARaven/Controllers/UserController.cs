@@ -8,6 +8,7 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace SendARaven.Controllers
 {
+    using System.IdentityModel.Protocols.WSTrust;
     using System.Web.Services.Protocols;
     using Models;
 
@@ -15,7 +16,7 @@ namespace SendARaven.Controllers
     /**
     * Note @{BaseURl} = /v1/api/user
     */
-    public class UserController : ApiController
+    public class UserController : BaseController
     {
 
         // GET /v1/api/user/GetByUserId
@@ -39,6 +40,7 @@ namespace SendARaven.Controllers
         [HttpPost]
         public void Register([FromBody]RegisterUserRequest request)
         {
+            GetHeaders(request);
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
