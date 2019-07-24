@@ -9,6 +9,6 @@ namespace SendARaven.Models
     {
         public Enums.ChannelType ChannelType;
         public Enums.ChannelProvider ChannelProvider;
-        public string ChannelId;
+        public string UserChannelId;
     }
 }

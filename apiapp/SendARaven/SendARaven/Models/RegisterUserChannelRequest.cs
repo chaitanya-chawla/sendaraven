@@ -12,6 +12,6 @@ namespace SendARaven.Models
         public String userId { get; set; }
         public String channelName { get; set; }
         public String channelType { get; set; }
-        public String channelId { get; set; }
+        public String UserChannelId { get; set; }
     }
 }

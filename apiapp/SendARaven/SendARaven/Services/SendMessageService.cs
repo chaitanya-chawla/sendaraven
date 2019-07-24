@@ -17,7 +17,7 @@ namespace SendARaven.Services
         private static TemplateEntity smsTemplateEntity = new TemplateEntity()
         {
             TemplateId = "smsTemplate1",
-            Body = "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.channelId\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+            Body = "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.userChannelId\"\r\n      ]\r\n    }\r\n  ]\r\n}",
             ChannelProvider = Enums.ChannelProvider.Msg91,
             ChannelType = Enums.ChannelType.Sms,
             Headers = new Dictionary<string, string>
@@ -34,7 +34,7 @@ namespace SendARaven.Services
         private static TemplateEntity emailTemplateEntity = new TemplateEntity()
         {
             TemplateId = "emailTemplate1",
-            Body = "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.channelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}",
+            Body = "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.userChannelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}",
             ChannelProvider = Enums.ChannelProvider.Sendgrid,
             ChannelType = Enums.ChannelType.Email,
             Headers = new Dictionary<string, string>
@@ -126,7 +126,7 @@ namespace SendARaven.Services
                     var requestConfig = getRequestConfig(request);
                     var userConfig = recipient.Attributes;
 
-                    userConfig.Add("channelId",userChannelInformation.ChannelId);
+                    userConfig.Add("userChannelId",userChannelInformation.UserChannelId);
                     configureTemplate(template, channelConfig, userConfig, requestConfig);
                     var status = await sendRequest(template);
                     Console.Out.WriteLine(status);

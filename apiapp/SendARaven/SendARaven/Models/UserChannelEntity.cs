@@ -11,7 +11,7 @@ namespace SendARaven.Models
         public string Userid;
         public string tenantId;
         public Enums.ChannelType ChannelType;
-        public string ChannelId;
+        public string UserChannelId;
         public string ChannelName;
 
     }
