@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SendARaven.Models
 {
-    public class RegistrationResponse
+    public class DeveloperRegisterEntity
     {
         public String ApiKey { get; set; }
         public String TenantId { get; set; }

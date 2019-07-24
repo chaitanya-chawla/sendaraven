@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SendARaven.Models
 {
-    public class RegisterChannel
+    public class ChannelEntity
     {
 
         public String id { get; set; }
@@ -16,10 +16,5 @@ namespace SendARaven.Models
 
         public Dictionary<String, Object> cfg { get; set; }
 
-        public String templateEndpoint { get; set; }
-
-        public Dictionary<String, Object> templateHeader { get; set; }
-
-        public String templateBody { get; set; }
     }
 }

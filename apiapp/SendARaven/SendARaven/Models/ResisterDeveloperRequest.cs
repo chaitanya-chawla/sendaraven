@@ -7,7 +7,7 @@ namespace SendARaven.Models
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class DeveloperRegistrationRequest
+    public class ResisterDeveloperRequest
     {
         [Required]
         public String Email { get; set; }
