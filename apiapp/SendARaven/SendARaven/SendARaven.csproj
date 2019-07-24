@@ -90,6 +90,9 @@
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Swashbuckle.Core">
       <HintPath>..\packages\Swashbuckle.Core.5.3.1\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
@@ -202,6 +205,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\service\DBCoreService.cs" />
@@ -215,16 +219,22 @@
     </Compile>
     <Compile Include="Models\ChannelEntity.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\GuestInformation.cs" />
+    <Compile Include="Models\Recipients.cs" />
     <Compile Include="Models\RegisterChannelRequest.cs" />
     <Compile Include="Models\RegisterUserChannelRequest.cs" />
     <Compile Include="Models\HeaderRequestBase.cs" />
     <Compile Include="Models\RegisterUserRequest.cs" />
     <Compile Include="Models\DeveloperRegisterEntity.cs" />
     <Compile Include="Models\ResisterDeveloperRequest.cs" />
+    <Compile Include="Models\SendMessageRequest.cs" />
     <Compile Include="Models\TemplateEntity.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserChannelEntity.cs" />
+    <Compile Include="Models\UserChannelInformation.cs" />
     <Compile Include="Models\UserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SendMessageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

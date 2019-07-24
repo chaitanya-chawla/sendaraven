@@ -5,12 +5,11 @@ using System.Web;
 
 namespace SendARaven.Models
 {
-    //deprecated
-    public class UserEntity
+    public class Recipients
     {
         public string UserId;
-        public string TenantId;
         public Dictionary<string, string> Attributes;
-
+        public List<Enums.ChannelType> ChannelTypes;
+        public List<UserChannelInformation> Guests;
     }
 }

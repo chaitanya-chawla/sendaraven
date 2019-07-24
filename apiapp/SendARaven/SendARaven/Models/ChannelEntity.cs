@@ -14,7 +14,7 @@ namespace SendARaven.Models
         public String TemplateId { get; set; }
         public Enums.ChannelProvider ChannelProvider;
         public int Status;
-        public Dictionary<String, Object> ChannelConfig { get; set; }
+        public Dictionary<String, String> ChannelConfig { get; set; }
 
     }
 }

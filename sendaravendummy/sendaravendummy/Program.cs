@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharp;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -13,6 +14,8 @@ namespace sendaravendummy
     {
         static void Main(string[] args)
         {
+
+            //send email
             TemplateFormat template = Template.getTemplate(ChannelType.Mail, Provider.SendGrid);
             var channelConfig = ChannelInformation.getConfiguration("a", ChannelType.Mail, Provider.SendGrid);
             Request request =new Request("Hi $user.firstName","Testing message", "chaitanyachawla1996@gmail.com");
@@ -20,7 +23,18 @@ namespace sendaravendummy
 
             var userConfig = User.getById("blah");
             Communicate.configureTemplate(template,channelConfig,userConfig,requestConfig);
-            HttpResponseMessage response = Communicate.sendRequest(template).Result;
+            var response = Communicate.sendRequest(template).Result;
+            Console.Out.WriteLine("done");
+
+            //send message
+            TemplateFormat template2 = Template.getTemplate(ChannelType.Sms, Provider.Msg91);
+            var channelConfig2 = ChannelInformation.getConfiguration("a", ChannelType.Sms, Provider.Msg91);
+            Request request2 = new Request("Hi $user.firstName", "Testing message", "8100408210");
+            var requestConfig2 = getRequestConfig(request2);
+
+            var userConfig2 = User.getById("blah");
+            Communicate.configureTemplate(template2, channelConfig2, userConfig2, requestConfig2);
+            var response2 = Communicate.sendRequest(template2).Result;
             Console.Out.WriteLine("done");
         }
 
@@ -38,7 +52,7 @@ namespace sendaravendummy
                 requestConfig.Add("subject", request.subject);
             }
 
-            if (request.subject != null)
+            if (request.channelId != null)
             {
                 requestConfig.Add("channelId", request.channelId);
             }
@@ -92,13 +106,32 @@ namespace sendaravendummy
         
         public static TemplateFormat getTemplate(ChannelType type, Provider provider)
         {
-            string body =
+            string emailbody =
             "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.channelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}";
-            Dictionary<string, string> header = new Dictionary<string, string>
+            Dictionary<string, string> emailheader = new Dictionary<string, string>
             {
-                {"Authorization", "Bearer $config.apiKey"}
+                {"Authorization", "Bearer $config.apiKey"},
+                {"content-type", "application/json"}
             };
-            return new TemplateFormat(header, body, HttpMethod.Post, "https://api.sendgrid.com/v3/mail/send", new List<string>{ "apiKey", "senderId" });
+
+            TemplateFormat emailTemplateFormat = new TemplateFormat(emailheader, emailbody, HttpMethod.Post, "https://api.sendgrid.com/v3/mail/send", new List<string> { "apiKey", "senderId" });
+
+            string smsbody =
+                "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.channelId\"\r\n      ]\r\n    }\r\n  ]\r\n}";
+
+            Dictionary<string, string> smsheader = new Dictionary<string, string>
+            {
+                {"authkey", "$config.apiKey"},
+                {"content-type", "application/json"}
+            };
+
+            TemplateFormat smsTemplateFormat = new TemplateFormat(smsheader, smsbody, HttpMethod.Post, "https://api.msg91.com/api/v2/sendsms?country=91", new List<string> { "apiKey", "senderId" });
+
+            if (type == ChannelType.Mail)
+            {
+                return emailTemplateFormat;
+            }
+            return smsTemplateFormat;
         }
     }
 
@@ -126,11 +159,21 @@ namespace sendaravendummy
 
         public static Dictionary<string, string> getConfiguration(string tenantId, ChannelType channelType, Provider provider)
         {
-            return new Dictionary<string, string>
+            var emailConfig = new Dictionary<string, string>
             {
                 {"apiKey", "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"},
                 {"senderId", "testuser@example.com"}
             };
+
+            var smsConfig = new Dictionary<string, string>
+            {
+                {"apiKey", "286355ArYeDDLx4EFP5d367ce1"},
+                {"senderId", "TestId"}
+            };
+
+            if (channelType == ChannelType.Mail)
+                return emailConfig;
+            return smsConfig;
         }
 
     }
@@ -179,17 +222,17 @@ namespace sendaravendummy
 
         public static HttpClient client;
 
-        public static async Task<HttpResponseMessage> sendRequest(TemplateFormat template)
+        public static async Task<ResponseStatus> sendRequest(TemplateFormat template)
         {
-            client = new HttpClient();
-            var content = new StringContent(template.body, Encoding.UTF8, "application/json");
+            var client = new RestClient(template.url);
+            var request = new RestRequest(Method.POST);
             foreach (var header in template.header)
             {
-                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                request.AddHeader(header.Key, header.Value);
             }
-            
-            var response = await client.PostAsync(template.url, content);
-            return response;
+            request.AddParameter("application/json", template.body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            return response.ResponseStatus;
         }
 
         public static void configureTemplate(TemplateFormat template, Dictionary<string, string> config, string prefix)

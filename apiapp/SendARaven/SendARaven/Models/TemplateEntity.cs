@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.Remoting.Channels;
 using System.Web;
+using RestSharp;
 
 namespace SendARaven.Models
 {
@@ -15,7 +16,7 @@ namespace SendARaven.Models
         public Dictionary<string, string> Headers;
         public string Body;
         public string UrlEndpoint;
-        public HttpMethod UrlMethod;
+        public Method UrlMethod;
         public List<string> MandatoryConfigKeys;
         public int Status;
     }

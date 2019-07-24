@@ -5,12 +5,15 @@ using System.Web;
 
 namespace SendARaven.Models
 {
-    //deprecated
-    public class UserEntity
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("developer")]
+    public class User
     {
         public string UserId;
         public string TenantId;
         public Dictionary<string, string> Attributes;
-
+        public List<UserChannelInformation> ChannelsInformation;
     }
 }
