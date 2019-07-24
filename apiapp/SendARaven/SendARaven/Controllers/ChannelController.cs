@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SendARaven.Controllers.service;
 using Swashbuckle.Swagger.Annotations;
 
 namespace SendARaven.Controllers
@@ -15,28 +16,18 @@ namespace SendARaven.Controllers
     /**
      * Note @{BaseURl} = /v1/api/channel
      */
+    [RoutePrefix("v1/api/channel")]
     public class ChannelController : ApiController
     {
 
-        //API END POINT  => /v1/api/channel/GetByUserId
-        [SwaggerOperation("GetByChannelId")]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        public ChannelEntity GetByChannelId(String id)
-        {
-            if (!ModelState.IsValid)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            return new ChannelEntity();
-        }
+        private DBCoreService dbCoreService = new DBCoreService();
 
         //API END POINT => /v1/api/channel/Register
         [SwaggerOperation("Register")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [SwaggerResponse(HttpStatusCode.OK)]
         [HttpPost]
+        [Route("register")]
         public ChannelEntity Register([FromBody]RegisterChannelRequest request)
         {
             if (!ModelState.IsValid)
@@ -44,7 +35,7 @@ namespace SendARaven.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new ChannelEntity();
+            return dbCoreService.SaveChannelEntity(request);
         }
 
 
@@ -52,9 +43,11 @@ namespace SendARaven.Controllers
         [SwaggerOperation("List")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.Created)]
+        [Route("list")]
+        [HttpGet]
         public List<ChannelEntity> List()
         {
-            return null;
+            return dbCoreService.ListChannels();
         }
 
     }

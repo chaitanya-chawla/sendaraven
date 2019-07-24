@@ -399,7 +399,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"subject\": \"hello\",\n\t\"text-body\": \"world\",\n\t\"html-body\": \"world\",\n\t\n\t\"to\":\n\t\t{\n\t\t\t\"userId\": \"\",\n\t\t\t\"attributes\":\n\t\t\t\t{\n\t\t\t\t\t\"city\": \"Bangalore\"\n\t\t\t\t},\n\t\t\t\"channel\": \"*\",\n\t\t\t\n\t\t\t\"guest\":\n\t\t\t\t[\n\t\t\t\t\t{\n\t\t\t\t\t\"channelName\": \"my email\",\n\t\t\t\t\t\"channelType\": \"email\",\n\t\t    \t\t\"channelId\": \"abc@xyz.com\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t}\n}"
+					"raw": "{\n\t\"subject\": \"hello\",\n\t\"text-body\": \"hello ${usr.firstName}\",\n\t\"html-body\": \"<h2>hello ${usr.firstName}</h2>\",\n\t\n\t\"to\":\n\t\t{\n\t\t\t\"userId\": \"\",\n\t\t\t\"attributes\":\n\t\t\t\t{\n\t\t\t\t\t\"city\": \"Bangalore\"\n\t\t\t\t},\n\t\t\t\"channelType\": [\"*\", \"email\", \"sms-t\"],\n\t\t\t\"channelNameMap\": \n\t\t\t\t{\n\t\t\t\t\t\"email\": \"my email\",\n\t\t\t\t\t\"sms-t\": \"sms t\"\n\t\t\t\t},\n\t\t\t\n\t\t\t\"guest\":\n\t\t\t\t[\n\t\t\t\t\t{\n\t\t\t\t\t\"channelName\": \"my email\",\n\t\t\t\t\t\"channelType\": \"email\",\n\t\t    \t\t\"channelId\": \"abc@xyz.com\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t}\n}"
 				},
 				"url": {
 					"raw": "http://localhost/v1/msg",
