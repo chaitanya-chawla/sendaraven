@@ -8,20 +8,21 @@ namespace SendARaven.Controllers
     using System.IdentityModel.Protocols.WSTrust;
     using System.Web.Http;
     using Models;
+    using service;
 
-    public class BaseController : ApiController
+    public abstract class BaseController : ApiController
     {
 
 
-        public HeaderRequestBase GetHeaders( Boolean shouldThrowException = true)
+        protected HeaderRequestBase GetHeaders( Boolean shouldThrowException = true)
         {
             var re = Request;
             var headers = re.Headers;
 
-            if (headers.Contains("apiKey"))
+            if (headers.Contains("x-api-key"))
             {
-                string apiKey = headers.GetValues("apiKey").First();
-                string tenantId = headers.GetValues("tenantId").First();
+                string apiKey = headers.GetValues("x-api-key").First();
+                string tenantId = headers.GetValues("x-tenant-id").First();
 
                 HeaderRequestBase request = new HeaderRequestBase();
                 request.apiKey = apiKey;
@@ -38,15 +39,15 @@ namespace SendARaven.Controllers
         }
 
 
-        public void GetHeaders(HeaderRequestBase request,Boolean shouldThrowException = true )
+        protected void GetHeaders(HeaderRequestBase request, Boolean shouldThrowException = true )
         {
             var re = Request;
             var headers = re.Headers;
 
-            if (headers.Contains("apiKey"))
+            if (headers.Contains("x-api-key"))
             {
-                string apiKey = headers.GetValues("apiKey").First();
-                string tenantId = headers.GetValues("tenantId").First();
+                string apiKey = headers.GetValues("x-api-key").First();
+                string tenantId = headers.GetValues("x-tenant-id").First();
 
                 request.apiKey = apiKey;
                 request.tenantId = tenantId;

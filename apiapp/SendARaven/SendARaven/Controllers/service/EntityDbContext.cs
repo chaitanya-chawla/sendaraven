@@ -1,37 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using System.Collections.Generic;
 
 namespace SendARaven.Controllers.service
 {
-    using System.Data.SqlClient;
     using Models;
     using DbContext = System.Data.Entity.DbContext;
 
     public class EntityDbContext : DbContext
     {
 
-        public EntityDbContext() 
+        public EntityDbContext()
         {
-             this.Database.Connection.ConnectionString = "Server=tcp:sendaraventestsql.database.windows.net,1433;Initial Catalog=raven;Persist Security Info=False;" +
-                                                         "User ID=ganesh;Password=Bangalore@123;" +
-                                                         "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            
+            string s1 = "Server=tcp:sendaraventestsql.database.windows.net,1433;Initial Catalog=raven;Persist Security Info=False;" +
+                        "User ID=ganesh;Password=Bangalore@123;" +
+                        "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            String s2 =
+                "Server=tcp:sendaraventestsql.database.windows.net,1433;" +
+                "Initial Catalog=hack19test2;Persist Security Info=False;" +
+                "User ID=ganesh;Password=Bangalore@123;" +
+                "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+            this.Database.Connection.ConnectionString = s1;
 
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DeveloperRegisterEntity>().ToTable("developer");
-            modelBuilder.Entity<UserEntity>().ToTable("developer");
+            modelBuilder.Entity<User1>().ToTable("user1");
+            
+
 
         }
         
 
         public DbSet<DeveloperRegisterEntity> DeveloperRegisterEntities { get; set; }
+        
+        public DbSet<User1> Users { get; set; }
 
     }
 }

@@ -25,17 +25,19 @@ namespace SendARaven.Models
         }
 
         [Required, StringLength(128), Display(Name = "apiKey"), Column("apiKey")]
-        [Key]
         public String ApiKey { get; set; }
 
-        [Required, StringLength(128), Display(Name = "tenantId"), Column("tenantId")]
+        [Key]
+        [Required, Display(Name = "tenantId"), Column("tenantId")]
         public String TenantId { get; set; }
 
         [Required, StringLength(128), Display(Name = "email"), Column("email")]
         public String Email { get; set; }
 
+        [Required, StringLength(128), Display(Name = "companyName"), Column("companyName")]
         public String CompanyName { get; set; }
 
+        [Required, StringLength(128), Display(Name = "tenantName"), Column("tenantName")]
         public String TenantName { get; set; }
 
     }

@@ -48,9 +48,9 @@ namespace SendARaven.Services
             UrlMethod = Method.POST
         };
 
-        private static List<User> getListOfRecipients(Recipients recipients)
+        private static List<User1> getListOfRecipients(Recipients recipients)
         {
-            List<User> allreceivers=new List<User>();
+            List<User1> allreceivers=new List<User1>();
             if (!String.IsNullOrWhiteSpace(recipients.UserId))
             {
                 // fetch user from database
@@ -68,7 +68,7 @@ namespace SendARaven.Services
 
             foreach (var guest in recipients.Guests)
             {
-                var user = new User();
+                var user = new User1();
                 user.ChannelsInformation.Add(guest);
                 allreceivers.Add(user);
             }

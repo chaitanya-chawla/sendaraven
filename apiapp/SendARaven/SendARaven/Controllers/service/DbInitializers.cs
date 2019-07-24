@@ -8,16 +8,23 @@ namespace SendARaven.Controllers.service
     using System.Data.Entity;
     using Models;
 
-    public class DbInitializers : DropCreateDatabaseIfModelChanges<EntityDbContext>
+    public class DbInitializers : NullDatabaseInitializer<EntityDbContext>
     {
-
-        protected override void Seed(EntityDbContext context)
+        public override void InitializeDatabase(EntityDbContext context)
         {
-            context.Database.CreateIfNotExists();
-            GetDeveloperRegisterEntities().ForEach( c => context.DeveloperRegisterEntities.Add(c));
+            base.InitializeDatabase(context);
+//            GetDeveloperRegisterEntities().ForEach(c => context.DeveloperRegisterEntities.Add(c));
+//             GetUser1().ForEach(c => context.Users.Add(c));
+//            context.SaveChanges();
         }
+        //        protected override void Seed(EntityDbContext context)
+        //        {
+        //            GetDeveloperRegisterEntities().ForEach( c => context.DeveloperRegisterEntities.Add(c));
+        //             GetUser1().ForEach(c => context.Users.Add(c));
+        //            context.SaveChanges();
+        //        }
 
-        
+
 
         public List<DeveloperRegisterEntity>  GetDeveloperRegisterEntities()
         {
@@ -29,7 +36,22 @@ namespace SendARaven.Controllers.service
             return categories;
         }
 
-       
+        public List<User1> GetUser1()
+        {
+            var users = new List<User1>
+            {
+                new User1
+                {
+                    UserId = "u111",
+                    TenantId = "tete",
+                    Attributes = null
+                }
+
+            };
+            return users;
+        }
+
+
 
 
     }

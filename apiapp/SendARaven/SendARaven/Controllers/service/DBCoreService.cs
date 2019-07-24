@@ -42,6 +42,41 @@ namespace SendARaven.Controllers.service
 
         }
 
+
+        public User1 SaveUserEntity()
+        {
+            String apikey = Guid.NewGuid().ToString();
+            Dictionary<String, String> a 
+                = new Dictionary<String, String>();
+            a.Add("a","b");
+            a.Add("a1", "b1");
+
+            User1 entity = new User1() {
+                UserId = apikey ,
+                TenantId = "1212",
+                Attributes = a
+                };
+
+            var query = this.dbContext.Users.Add(entity);
+            this.dbContext.SaveChanges();
+            
+            return query;
+
+        }
+
+        public User1 GetUserEntity(string userId)
+        {
+
+            var query = this.dbContext.Users.First(p => p.UserId == userId);
+
+            this.dbContext.SaveChanges();
+
+            return query;
+
+        }
+
+
+
         public DeveloperRegisterEntity GetDevEntity(String tenantID)
         {
 
