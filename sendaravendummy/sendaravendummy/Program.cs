@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharp;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -22,7 +23,7 @@ namespace sendaravendummy
 
             var userConfig = User.getById("blah");
             Communicate.configureTemplate(template,channelConfig,userConfig,requestConfig);
-            HttpResponseMessage response = Communicate.sendRequest(template).Result;
+            var response = Communicate.sendRequest(template).Result;
             Console.Out.WriteLine("done");
 
             //send message
@@ -33,7 +34,7 @@ namespace sendaravendummy
 
             var userConfig2 = User.getById("blah");
             Communicate.configureTemplate(template2, channelConfig2, userConfig2, requestConfig2);
-            HttpResponseMessage response2 = Communicate.sendRequest(template2).Result;
+            var response2 = Communicate.sendRequest(template2).Result;
             Console.Out.WriteLine("done");
         }
 
@@ -109,7 +110,8 @@ namespace sendaravendummy
             "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.channelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}";
             Dictionary<string, string> emailheader = new Dictionary<string, string>
             {
-                {"Authorization", "Bearer $config.apiKey"}
+                {"Authorization", "Bearer $config.apiKey"},
+                {"content-type", "application/json"}
             };
 
             TemplateFormat emailTemplateFormat = new TemplateFormat(emailheader, emailbody, HttpMethod.Post, "https://api.sendgrid.com/v3/mail/send", new List<string> { "apiKey", "senderId" });
@@ -119,7 +121,8 @@ namespace sendaravendummy
 
             Dictionary<string, string> smsheader = new Dictionary<string, string>
             {
-                {"authkey", "$config.apiKey"}
+                {"authkey", "$config.apiKey"},
+                {"content-type", "application/json"}
             };
 
             TemplateFormat smsTemplateFormat = new TemplateFormat(smsheader, smsbody, HttpMethod.Post, "https://api.msg91.com/api/v2/sendsms?country=91", new List<string> { "apiKey", "senderId" });
@@ -219,17 +222,17 @@ namespace sendaravendummy
 
         public static HttpClient client;
 
-        public static async Task<HttpResponseMessage> sendRequest(TemplateFormat template)
+        public static async Task<ResponseStatus> sendRequest(TemplateFormat template)
         {
-            client = new HttpClient();
-            var content = new StringContent(template.body, Encoding.UTF8, "application/json");
+            var client = new RestClient(template.url);
+            var request = new RestRequest(Method.POST);
             foreach (var header in template.header)
             {
-                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                request.AddHeader(header.Key, header.Value);
             }
-
-            var response = await client.PostAsync(template.url, content);
-            return response;
+            request.AddParameter("application/json", template.body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            return response.ResponseStatus;
         }
 
         public static void configureTemplate(TemplateFormat template, Dictionary<string, string> config, string prefix)
