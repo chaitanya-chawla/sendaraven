@@ -35,7 +35,7 @@ namespace SendARaven.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return dbCoreService.SaveChannelEntity(request);
+            return null;
         }
 
 
@@ -47,7 +47,7 @@ namespace SendARaven.Controllers
         [HttpGet]
         public List<ChannelEntity> List()
         {
-            return dbCoreService.ListChannels();
+            return null;
         }
 
     }
