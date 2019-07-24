@@ -8,13 +8,13 @@ namespace SendARaven.Models
     public class ChannelEntity
     {
 
-        public String id { get; set; }
-        public String name { get; set; }
-        public String type { get; set; }
-        public String templateId { get; set; }
-        public String endpointType { get; set; }
-
-        public Dictionary<String, Object> cfg { get; set; }
+        public String TenantId { get; set; }
+        public String ChannelName { get; set; }
+        public Enums.ChannelType ChannelType { get; set; }
+        public String TemplateId { get; set; }
+        public Enums.ChannelProvider ChannelProvider;
+        public int Status;
+        public Dictionary<String, Object> ChannelConfig { get; set; }
 
     }
 }

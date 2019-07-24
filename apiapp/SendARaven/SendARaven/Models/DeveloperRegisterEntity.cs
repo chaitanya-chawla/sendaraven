@@ -9,6 +9,7 @@ namespace SendARaven.Models
     {
         public String ApiKey { get; set; }
         public String TenantId { get; set; }
+        public String TenantName { get; set; }
         public Dictionary<String, Object> MetaData { get; set; }
 
     }
