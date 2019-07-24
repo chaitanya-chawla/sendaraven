@@ -6,7 +6,7 @@
 log4net.config
 FxCop.xml
 *.lastcodeanalysissucceeded
-
+*.cache
 SendARaven/obj/*
 SendARaven/bin/*
 SendARaven/obj/Debug/*
