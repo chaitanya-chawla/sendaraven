@@ -7,7 +7,7 @@ namespace SendARaven.Models
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterUserRequest
+    public class RegisterUserRequest : HeaderRequestBase
     {
         [Required]
         public String userId { get; set; }
@@ -15,13 +15,12 @@ namespace SendARaven.Models
         [Required]
         public String firstName { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         public String middleName { get; set; }
 
         [Required]
         public String lastName { get; set; }
 
-        [Required]
         public String email { get; set; }
 
         public Dictionary<String, Object> mobile { get; set; }

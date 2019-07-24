@@ -26,7 +26,7 @@ ArgoLogs/
 /Src/Deployment/Deployment.OceWeb/Logs/*
 /Src/Deployment/Deployment.Web/scripts/img/*
 /SendARaven/obj/*
-.vs/
+/.vs/
 *.swp
 /Src/Deployment/Deployment.Web/obj/HotReload
 /Src/Tools/Tools.DataAccessLayerGenerator/DALPackage/node_modules/

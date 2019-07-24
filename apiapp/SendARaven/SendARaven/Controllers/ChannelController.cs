@@ -12,42 +12,47 @@ namespace SendARaven.Controllers
     using System.Web.Services.Protocols;
     using Models;
 
+    /**
+     * Note @{BaseURl} = /v1/api/channel
+     */
     public class ChannelController : ApiController
     {
 
-        // GET api/values/5
+        //API END POINT  => /v1/api/channel/GetByUserId
         [SwaggerOperation("GetByChannelId")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public RegisterChannel GetByUserId(String channelId)
+        public ChannelEntity GetByChannelId(String id)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new RegisterChannel();
+            return new ChannelEntity();
         }
 
-        // POST api/values
-        [SwaggerOperation("Post")]
+        //API END POINT => /v1/api/channel/Register
+        [SwaggerOperation("Register")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public RegisterChannel Post([FromBody]RegisterChannelRequest request)
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [HttpPost]
+        public ChannelEntity Register([FromBody]RegisterChannelRequest request)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new RegisterChannel();
+            return new ChannelEntity();
         }
 
 
-        // POST api/values
+        //API END POINT => /v1/api/channel/List
         [SwaggerOperation("List")]
+        [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.Created)]
-        [HttpGet]
-        public List<RegisterChannel> List()
+        public List<ChannelEntity> List()
         {
             return null;
         }
