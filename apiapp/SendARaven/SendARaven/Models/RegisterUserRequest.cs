@@ -7,7 +7,7 @@ namespace SendARaven.Models
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterUserRequest
+    public class RegisterUserRequest : HeaderRequestBase
     {
         [Required]
         public String userId { get; set; }
