@@ -15,26 +15,40 @@ namespace sendaravendummy
         {
             TemplateFormat template = Template.getTemplate(ChannelType.Mail, Provider.SendGrid);
             var channelConfig = ChannelInformation.getConfiguration("a", ChannelType.Mail, Provider.SendGrid);
-            Communicate.configureTemplate(template, channelConfig, "config");
-            Console.Out.WriteLine(template.header.ToString());
-            Console.Out.WriteLine(template.body);
-            
+            Request request =new Request("Hi $user.firstName","Testing message", "chaitanyachawla1996@gmail.com");
+            var requestConfig = getRequestConfig(request);
+
+            var userConfig = User.getById("blah");
+            Communicate.configureTemplate(template,channelConfig,userConfig,requestConfig);
+            HttpResponseMessage response = Communicate.sendRequest(template).Result;
+            Console.Out.WriteLine("done");
         }
 
-        static async Task Execute()
+        public static Dictionary<string, string> getRequestConfig(Request request)
         {
-            var apiKey = "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";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("test@example.com", "Example User");
-            var subject = "Sending with Twilio SendGrid is Fun";
-            var to = new EmailAddress("chaitanyachawla1996@gmail.com", "Example User");
-            var plainTextContent = "and easy to do anywhere, even with C#";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
+            Dictionary<string, string> requestConfig = new Dictionary<string, string>();
+            if (request.textBody != null)
+            {
+                requestConfig.Add("textBody", request.textBody);
+
+            }
+
+            if (request.subject != null)
+            {
+                requestConfig.Add("subject", request.subject);
+            }
+
+            if (request.subject != null)
+            {
+                requestConfig.Add("channelId", request.channelId);
+            }
+
+            return requestConfig;
         }
 
     }
+
+    
 
     public enum ChannelType
     {
@@ -79,13 +93,26 @@ namespace sendaravendummy
         public static TemplateFormat getTemplate(ChannelType type, Provider provider)
         {
             string body =
-                "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"${req-usr.channelId}\"\r\n        }\r\n      ],\r\n      \"subject\": \"${req.subject}\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"${req.body}\"\r\n    }\r\n  ]\r\n}";
+            "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.channelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}";
             Dictionary<string, string> header = new Dictionary<string, string>
             {
-                {"Authorization", "Bearer $config.apiKey"},
-                {"Content - Type", "application / json"}
+                {"Authorization", "Bearer $config.apiKey"}
             };
             return new TemplateFormat(header, body, HttpMethod.Post, "https://api.sendgrid.com/v3/mail/send", new List<string>{ "apiKey", "senderId" });
+        }
+    }
+
+    public class Request
+    {
+        public string textBody;
+        public string subject;
+        public string channelId;
+
+        public Request(string textBody, string subject, string channelId)
+        {
+            this.textBody = textBody;
+            this.subject = subject;
+            this.channelId = channelId;
         }
     }
 
@@ -102,7 +129,7 @@ namespace sendaravendummy
             return new Dictionary<string, string>
             {
                 {"apiKey", "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"},
-                {"senderId", "ravenTesting@microsoft.com"}
+                {"senderId", "testuser@example.com"}
             };
         }
 
@@ -125,36 +152,44 @@ namespace sendaravendummy
 
     public class User
     {
-        public string firstName;
-        string lastName;
         string userId;
         string tenantId;
-         Dictionary<string, string> attributes;
+        Dictionary<string, string> attributes;
 
-        User(string firstName, string lastName, string userId, string tenantId, Dictionary<string, string> attributes)
+        User(string userId, string tenantId, Dictionary<string, string> attributes)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
             this.userId = userId;
             this.tenantId = tenantId;
             this.attributes = attributes;
         }
 
-        public static User getById(string userId)
+        public static Dictionary<string, string> getById(string userId)
         {
-            return new User("Chaitanya", "Chawla", "1", "t1", null);
+            var attributes = new Dictionary<string, string>
+            {
+                {"firstName", "Chaitanya"},
+                {"lastName", "Chawla"}
+            };
+            return attributes;
         }
     }
 
     public class Communicate
     {
 
-        public static readonly HttpClient client = new HttpClient();
+        public static HttpClient client;
 
-        public HttpResponseMessage sendRequest(TemplateFormat format)
+        public static async Task<HttpResponseMessage> sendRequest(TemplateFormat template)
         {
-            // send request
-            return null;
+            client = new HttpClient();
+            var content = new StringContent(template.body, Encoding.UTF8, "application/json");
+            foreach (var header in template.header)
+            {
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
+            
+            var response = await client.PostAsync(template.url, content);
+            return response;
         }
 
         public static void configureTemplate(TemplateFormat template, Dictionary<string, string> config, string prefix)
@@ -173,11 +208,14 @@ namespace sendaravendummy
             }
         }
 
-        public static void configureTemplate(TemplateFormat template, Dictionary<string, string> channelConfig, Dictionary<string, string> requestConfig, string channelId)
+        public static void configureTemplate(TemplateFormat template, Dictionary<string, string> channelConfig, Dictionary<string, string> userConfig, Dictionary<string, string> requestConfig)
         {
             
+            configureTemplate(template, requestConfig, "req");
+            configureTemplate(template, requestConfig, "req-user");
+            configureTemplate(template, userConfig, "req-user");
+            configureTemplate(template, userConfig, "user");
             configureTemplate(template, channelConfig, "config");
-        
         }
 
 

@@ -111,11 +111,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChannelEntity.cs" />
+    <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\RegisterChannelRequest.cs" />
     <Compile Include="Models\RegisterUserChannelRequest.cs" />
     <Compile Include="Models\RegisterUserRequest.cs" />
     <Compile Include="Models\DeveloperRegisterEntity.cs" />
     <Compile Include="Models\ResisterDeveloperRequest.cs" />
+    <Compile Include="Models\TemplateEntity.cs" />
+    <Compile Include="Models\UserChannelEntity.cs" />
+    <Compile Include="Models\UserEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
