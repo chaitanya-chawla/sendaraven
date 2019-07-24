@@ -5,14 +5,10 @@ using System.Web;
 
 namespace SendARaven.Models
 {
-    //deprecated
-    public class UserChannelEntity
+    public class UserChannelInformation
     {
-        public string Userid;
-        public string tenantId;
         public Enums.ChannelType ChannelType;
+        public Enums.ChannelProvider ChannelProvider;
         public string ChannelId;
-        public string ChannelName;
-
     }
 }
