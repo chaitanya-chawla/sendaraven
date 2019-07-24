@@ -42,7 +42,7 @@ namespace SendARaven.Services
         }
 
         private static ChannelEntity getChannel(Enums.ChannelType channelType,
-            Enums.ChannelProvider channelProvider)
+            Enums.ChannelProvider channelProvider, string tenantId)
         {
             return null;
         }
@@ -69,7 +69,7 @@ namespace SendARaven.Services
 
             if (request.htmlBody != null)
             {
-                requestConfig.Add("htmlBody", request.subject);
+                requestConfig.Add("htmlBody", request.htmlBody);
             }
 
             return requestConfig;
@@ -84,12 +84,14 @@ namespace SendARaven.Services
                 foreach (var userChannelInformation in recipient.ChannelsInformation)
                 {
                     var channel = getChannel(userChannelInformation.ChannelType,
-                        userChannelInformation.ChannelProvider);
+                        userChannelInformation.ChannelProvider, request.TenantId);
                     TemplateEntity template = getTemplate(channel.TemplateId);
+
                     var channelConfig = channel.ChannelConfig;
                     var requestConfig = getRequestConfig(request);
                     var userConfig = recipient.Attributes;
-                    userConfig.Add("channelid",userChannelInformation.ChannelId);
+
+                    userConfig.Add("channelId",userChannelInformation.ChannelId);
                     configureTemplate(template, channelConfig, userConfig, requestConfig);
                     var status = await sendRequest(template);
                     Console.Out.WriteLine(status);

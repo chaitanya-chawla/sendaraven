@@ -16,6 +16,8 @@ namespace SendARaven.Models
 
         public Recipients Recipients;
 
+        public string TenantId;
+
 
     }
 
