@@ -14,6 +14,40 @@ namespace SendARaven.Services
 {
     public class SendMessageService
     {
+        private static TemplateEntity smsTemplateEntity = new TemplateEntity()
+        {
+            TemplateId = "smsTemplate1",
+            Body = "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.channelId\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+            ChannelProvider = Enums.ChannelProvider.Msg91,
+            ChannelType = Enums.ChannelType.Sms,
+            Headers = new Dictionary<string, string>
+            {
+                {"authkey", "$config.apiKey"},
+                {"content-type", "application/json"}
+            },
+            MandatoryConfigKeys = new List<string> { "apiKey", "senderId" },
+            Status = 1,
+            UrlEndpoint = "https://api.msg91.com/api/v2/sendsms?country=91",
+            UrlMethod = Method.POST
+        };
+
+        private static TemplateEntity emailTemplateEntity = new TemplateEntity()
+        {
+            TemplateId = "emailTemplate1",
+            Body = "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.channelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}",
+            ChannelProvider = Enums.ChannelProvider.Sendgrid,
+            ChannelType = Enums.ChannelType.Email,
+            Headers = new Dictionary<string, string>
+            {
+                {"Authorization", "Bearer $config.apiKey"},
+                {"content-type", "application/json"}
+            },
+            MandatoryConfigKeys = new List<string> { "apiKey", "senderId" },
+            Status = 1,
+            UrlEndpoint = "https://api.sendgrid.com/v3/mail/send",
+            UrlMethod = Method.POST
+        };
+
         private static List<User> getListOfRecipients(Recipients recipients)
         {
             List<User> allreceivers=new List<User>();
@@ -47,10 +81,11 @@ namespace SendARaven.Services
             return null;
         }
 
-        private static TemplateEntity getTemplate(string templateId)
+        private static TemplateEntity getTemplate(Enums.ChannelType channelType)
         {
-            // return template
-            
+            if (channelType == Enums.ChannelType.Email)
+                return emailTemplateEntity;
+            return smsTemplateEntity;
         }
 
         private static Dictionary<string, string> getRequestConfig(SendMessageRequest request)
@@ -85,7 +120,7 @@ namespace SendARaven.Services
                 {
                     var channel = getChannel(userChannelInformation.ChannelType,
                         userChannelInformation.ChannelProvider, request.TenantId);
-                    TemplateEntity template = getTemplate(channel.TemplateId);
+                    TemplateEntity template = getTemplate(channel.ChannelType);
 
                     var channelConfig = channel.ChannelConfig;
                     var requestConfig = getRequestConfig(request);

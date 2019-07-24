@@ -16,7 +16,7 @@ namespace SendARaven.Models
         public enum ChannelProvider
         {
             Sendgrid,
-            Twilio
+            Msg91
         }
     }
 }
