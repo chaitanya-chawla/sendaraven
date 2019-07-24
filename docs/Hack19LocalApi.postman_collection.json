@@ -1,0 +1,280 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Hack19LocalApi",
+		"_postman_id": "9bcd65d0-240e-84ec-f7c3-1b83bf91fd10",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "loalRestApi",
+			"description": "",
+			"item": [
+				{
+					"name": "devloper",
+					"description": "",
+					"item": [
+						{
+							"name": "GetDevInfo",
+							"request": {
+								"url": "http://localhost:50694/v1/api/developer/connect",
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "abcd",
+										"description": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"me@outlook.com\",\n\t\"name\": \"John D\",\n\t\"companyName\": \"ABC\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "PostDevInfo",
+							"request": {
+								"url": "http://localhost:50694/v1/api/developer/register",
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "abcd",
+										"description": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"me@outlook.com\",\n\t\"name\": \"John D\",\n\t\"companyName\": \"ABC\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "user",
+					"description": "",
+					"item": [
+						{
+							"name": "user Reg",
+							"request": {
+								"url": "http://localhost:50694/v1/api/user/register",
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "ABCD==",
+										"description": ""
+									},
+									{
+										"key": "x-tenant-id",
+										"value": "b019fd5f-e1aa-473f-8b0e-3d9d9a3f86d3",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userId\": \"c37d9e49-1238-4df9-b14c-4fa1d010e20b\",\n\t\"firstName\": \"John\",\n\t\"middleName\": \"\",\n\t\"lastName\": \"D\",\n\t\"email\": \"abc@acsd.com\",\n\t\"mobile\": \n\t{\n\t\t\"country-code\": \"91\",\n\t\t\"number\": \"9123445672\"\n\t},\n\t\"attributes\":\n\t{\n\t\t\"city\": \"Bangalore\",\n\t\t\"zipcode\": \"560076\",\n\t\t\"promotion\": \"true\"\n\t}\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "GetDevInfo copy",
+							"request": {
+								"url": {
+									"raw": "http://localhost:50694/v1/api/user/GetByUserId?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "50694",
+									"path": [
+										"v1",
+										"api",
+										"user",
+										"GetByUserId"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "abcd",
+										"description": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"me@outlook.com\",\n\t\"name\": \"John D\",\n\t\"companyName\": \"ABC\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "channel",
+					"description": "",
+					"item": [
+						{
+							"name": "channel Reg",
+							"request": {
+								"url": "http://localhost:50694/v1/api/channel/register",
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "ABCD==",
+										"description": ""
+									},
+									{
+										"key": "x-tenant-id",
+										"value": "b019fd5f-e1aa-473f-8b0e-3d9d9a3f86d3",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    }\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "channel list",
+							"request": {
+								"url": "http://localhost:50694/v1/api/channel/list",
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "ABCD==",
+										"description": ""
+									},
+									{
+										"key": "x-tenant-id",
+										"value": "b019fd5f-e1aa-473f-8b0e-3d9d9a3f86d3",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    }\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "channel Get",
+							"request": {
+								"url": {
+									"raw": "http://localhost:50694/v1/api/channel/GetByChannelId?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "50694",
+									"path": [
+										"v1",
+										"api",
+										"channel",
+										"GetByChannelId"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "ABCD==",
+										"description": ""
+									},
+									{
+										"key": "x-tenant-id",
+										"value": "b019fd5f-e1aa-473f-8b0e-3d9d9a3f86d3",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"my sms\",\n    \"type\": \"sms-t\",\n    \"templateId\": \"sendraven://msg91\",\n    \"endpointType\": \"http\",\n    \"cfg\": {\n        \"apiKey\": \"286355ArYeDDLx4EFP5d367ce1\",\n        \"sender\": \"Raven\"\n    }\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}
