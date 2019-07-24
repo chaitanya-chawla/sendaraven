@@ -7,22 +7,25 @@ namespace SendARaven.Models
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterChannelRequest
+    public class RegisterChannelRequest : HeaderRequestBase
     {
         [Required]
-        public String name { get; set; }
+        public String ChannelName { get; set; }
 
         [Required]
-        public String type { get; set; }
+        public Enums.ChannelType ChannelType { get; set; }
 
         [Required]
-        public String templateId { get; set; }
+        public String TemplateId { get; set; }
 
         [Required]
-        public String endpointType { get; set; }
+        public Enums.ChannelProvider ChannelProvider { get; set; }
 
         [Required]
-        public Dictionary<String, Object> cfg { get; set; }
+        public int Status { get; set; }
+
+        [Required]
+        public Dictionary<String, String> ChannelConfig { get; set; }
 
     }
 }
