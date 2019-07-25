@@ -15,20 +15,19 @@ namespace SendARaven.Models
 
         public static Dictionary<string, string> attributes = new Dictionary<string, string> {{"City", "Bangalore"}};
 
-        public static UserEntity user1 = new UserEntity("user_1", tenantId, attributes,
-            new List<UserChannelInformation>
-            {
-                new UserChannelInformation
-                    (Enums.ChannelType.Email, "chaitanyachawla@yahoo.co.in")
-            });
+        public static UserEntity user1 = new UserEntity("user_1", tenantId, attributes);
 
-        public static UserEntity user2 = new UserEntity("user_2", tenantId, attributes,
-            new List<UserChannelInformation>
-            {
-                new UserChannelInformation
-                    (Enums.ChannelType.Email, "chaitanyachawla1996@gmail.com"),
-                new UserChannelInformation(Enums.ChannelType.Sms, "9717795767")
-            });
+        public static UserEntity user2 = new UserEntity("user_2", tenantId, attributes);
+            
+
+        public static UserChannelInformation user1Channel1 = new UserChannelInformation(Enums.ChannelType.Email,
+            "chaitanyachawla1996@gmail.com", "user_1", tenantId);
+
+        public static UserChannelInformation user1Channel2 = new UserChannelInformation(Enums.ChannelType.Sms,
+            "9717795767", "user_1", tenantId);
+
+        public static UserChannelInformation user2Channel1 = new UserChannelInformation(Enums.ChannelType.Email,
+            "ashima.wadha.1996@gmail.com", "user_2", tenantId);
 
 
         public static Dictionary<string, string> mailConfig = new Dictionary<string, string>

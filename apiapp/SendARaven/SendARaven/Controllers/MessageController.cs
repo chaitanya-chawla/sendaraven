@@ -32,7 +32,9 @@ namespace SendARaven.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-            await SendMessageService.SendMessages(request);
+            var tenantId = Request.Headers.GetValues("x-tenant-id").First();
+            SendMessageService service = new SendMessageService(tenantId);
+            await service.SendMessages(request);
         }
 
     }

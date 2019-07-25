@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using RestSharp.Extensions;
 
 namespace SendARaven.Controllers.service
 {
@@ -55,36 +59,77 @@ namespace SendARaven.Controllers.service
         }
 
 
-        public UserEntity SaveUserEntity()
+        public void SaveUserEntity(UserEntity user)
         {
-            String apikey = Guid.NewGuid().ToString();
-            Dictionary<String, String> a 
-                = new Dictionary<String, String>();
-            a.Add("a","b");
-            a.Add("a1", "b1");
+            using (var context = new EntityDbContext())
+            {
+                dbContext.Database.ExecuteSqlCommand("InsertUser @userId, @tenantId, @attributes",
+                    parameters: new[] { user.UserId, user.TenantId, JsonConvert.SerializeObject(user.Attributes) });
+            }
 
-            UserEntity entity = new UserEntity() {
-                UserId = apikey ,
-                TenantId = "1212",
-                Attributes = a
-                };
-
-            var query = this.dbContext.UserEntities.Add(entity).Entity;
-            this.dbContext.SaveChanges();
             
-            return query;
-
+            
         }
 
-        public UserEntity GetUserEntity(string userId)
+        public List<ChannelEntity> GetActiveChannelsByType(Enums.ChannelType channelType, string tenantId)
+        {
+            List<ChannelEntity> channelEntities;
+            using (var context = new EntityDbContext())
+            {
+                channelEntities = context.ChannelEntities.Where(channel => channel.ChannelType== channelType && channel.TenantId == tenantId && channel.Status==1).ToList();
+            }
+
+            return channelEntities;
+        }
+        public List<UserChannelInformation> GetUserChannelInformation(string userId, string tenantId)
+        {
+            List<UserChannelInformation> userChannelInformations;
+            using (var context = new EntityDbContext())
+            {
+                userChannelInformations = context.UserChannelInformations.Where(channel => channel.UserId == userId && channel.TenantId == tenantId).ToList();
+            }
+
+            return userChannelInformations;
+        }
+
+        
+
+        public UserEntity GetUserEntity(string userId, string tenantId)
+        {
+            UserEntity user;
+            using (var context = new EntityDbContext())
+            {
+                user = context.UserEntities.Single(use => use.UserId == userId && use.TenantId == tenantId);
+            }
+
+            return user;
+        }
+
+        public List<UserEntity> GetUsersByAttributes(Dictionary<string,string> attributes, string tenantId)
         {
 
-            var query = this.dbContext.UserEntities.First(p => p.UserId == userId);
+            List<UserEntity> users;
+            string query = "select * from myuser where ";
 
-            this.dbContext.SaveChanges();
+            int counter = 0;
+            int endPoint = attributes.Count;
+            foreach (var attr in attributes)
+            {
+                query = query + " ( JSON_VALUE(attributes, '$." + attr.Key + " ') " + " = " + "'" + attr.Value + "' ) ";
 
-            return query;
+                if (counter != endPoint - 1)
+                {
+                    query = query + " and ";
+                }
+                counter++;
+            }
 
+            using (var dbContext = new EntityDbContext())
+            {
+                users = dbContext.UserEntities.FromSql(query).ToList();
+            }
+
+            return users;
         }
 
 

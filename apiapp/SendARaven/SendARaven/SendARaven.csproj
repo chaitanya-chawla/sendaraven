@@ -266,6 +266,14 @@
     <Compile Include="Migrations\20190725133422_tableswithoutjson.designer.cs">
       <DependentUpon>20190725133422_tableswithoutjson.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190725192030_tablesupdated.cs" />
+    <Compile Include="Migrations\20190725192030_tablesupdated.designer.cs">
+      <DependentUpon>20190725192030_tablesupdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190725192507_tablesupdated2.cs" />
+    <Compile Include="Migrations\20190725192507_tablesupdated2.designer.cs">
+      <DependentUpon>20190725192507_tablesupdated2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\EntityDbContextModelSnapshot.cs" />
     <Compile Include="Models\ChannelEntity.cs" />
     <Compile Include="Models\Enums.cs" />
@@ -281,7 +289,6 @@
     <Compile Include="Models\SendMessageRequest.cs" />
     <Compile Include="Models\TemplateEntity.cs" />
     <Compile Include="Models\UserEntity.cs" />
-    <Compile Include="Models\UserChannelEntity.cs" />
     <Compile Include="Models\UserChannelInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SendMessageService.cs" />

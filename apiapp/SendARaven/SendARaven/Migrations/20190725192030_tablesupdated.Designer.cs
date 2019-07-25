@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SendARaven.Controllers.service;
 
 namespace SendARaven.Migrations
 {
     [DbContext(typeof(EntityDbContext))]
-    partial class EntityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190725192030_tablesupdated")]
+    partial class tablesupdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,7 +124,7 @@ namespace SendARaven.Migrations
 
                     b.HasKey("TenantId", "UserId", "ChannelType");
 
-                    b.ToTable("userchannelinfo");
+                    b.ToTable("UserChannelInformations");
 
                     b.HasData(
                         new

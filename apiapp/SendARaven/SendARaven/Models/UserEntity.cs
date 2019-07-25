@@ -14,14 +14,15 @@ namespace SendARaven.Models
     {
         public UserEntity()
         {
+            ChannelsInformation=new List<UserChannelInformation>();
         }
 
-        public UserEntity(string userId, string tenantId, Dictionary<string, string> attributes, List<UserChannelInformation> channelsInformation)
+        public UserEntity(string userId, string tenantId, Dictionary<string, string> attributes)
         {
             UserId = userId;
             Attributes = attributes;
-            ChannelsInformation = channelsInformation;
             TenantId = tenantId;
+            ChannelsInformation=new List<UserChannelInformation>();
         }
 
         [Required, Column("tenantId")]
@@ -31,7 +32,7 @@ namespace SendARaven.Models
         public string UserId { get; set; }
         
         // The JSON column
-        [Required , Display(Name = "attributes"), Column("attributes")]
+        [Required , Column("attributes")]
         public String atr
         {
             get { return JsonConvert.SerializeObject(Attributes); }
@@ -42,10 +43,21 @@ namespace SendARaven.Models
             }
         }
 
-        [NotMapped, Required, Column("channelInformation")]
+        [NotMapped]
         public Dictionary<string, string> Attributes { get; set; }
 
-        [NotMapped, Required, Column("channelsInformation")]
+        //[Required, Column("channelsInformation")]
+        //public String channelInfo
+        //{
+        //    get { return JsonConvert.SerializeObject(ChannelsInformation); }
+
+        //    set
+        //    {
+        //        ChannelsInformation = JsonConvert.DeserializeObject<List<UserChannelInformation>>(value);
+        //    }
+        //}
+        
+        [NotMapped]
         public List<UserChannelInformation> ChannelsInformation { get; set; }
     }
 }

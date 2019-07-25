@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using SendARaven.Models;
 using RestSharp;
 using RestSharp.Extensions;
+using SendARaven.Controllers.service;
 
 namespace SendARaven.Services
 {
     public class SendMessageService
     {
-        private string TenantId;
+        private string tenantId;
+        private DBCoreService dbCoreService=new DBCoreService();
 
         public SendMessageService(string tenantId)
         {
-            this.TenantId = tenantId;
+            this.tenantId = tenantId;
         }
 
-        private static TemplateEntity smsTemplateEntity = new TemplateEntity()
+        private TemplateEntity smsTemplateEntity = new TemplateEntity()
         {
             TemplateId = "smsTemplate1",
             Body = "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.userChannelId\"\r\n      ]\r\n    }\r\n  ]\r\n}",
@@ -38,7 +41,7 @@ namespace SendARaven.Services
             UrlMethod = Method.POST
         };
 
-        private static TemplateEntity emailTemplateEntity = new TemplateEntity()
+        private TemplateEntity emailTemplateEntity = new TemplateEntity()
         {
             TemplateId = "emailTemplate1",
             Body = "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.userChannelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}",
@@ -55,20 +58,22 @@ namespace SendARaven.Services
             UrlMethod = Method.POST
         };
 
-        private static List<UserEntity> getListOfRecipients(Recipients recipients)
+        private List<UserEntity> getListOfRecipients(Recipients recipients)
         {
             List<UserEntity> allreceivers=new List<UserEntity>();
             if (!String.IsNullOrWhiteSpace(recipients.UserId))
             {
-                // fetch user from database
+                allreceivers.Add(dbCoreService.GetUserEntity(recipients.UserId, tenantId));
             }
             else
             {
+                allreceivers.AddRange(dbCoreService.GetUsersByAttributes(recipients.Attributes, tenantId));
                 // fetch list of all users from database based on the attribute given;
             }
 
             foreach (var receiver in allreceivers)
             {
+                receiver.ChannelsInformation = dbCoreService.GetUserChannelInformation(receiver.UserId, tenantId);
                 receiver.ChannelsInformation= receiver.ChannelsInformation.Where(channel=> recipients.ChannelTypes.Contains(channel.ChannelType)).ToList();
             }
             // for all receivers keep only the relevant channels in the list recipients channels.
@@ -82,14 +87,15 @@ namespace SendARaven.Services
             return allreceivers;
         }
 
-        private static ChannelEntity getActiveChannelByType(Enums.ChannelType channelType)
+        private ChannelEntity getActiveChannelByType(Enums.ChannelType channelType)
         {
             // from the database get a list of all channels for tenant for which status is active that is 1.
             // There maybe multiple. return any 1 of them.
-            return null;
+            var channels= dbCoreService.GetActiveChannelsByType(channelType, tenantId);
+            return channels.Count != 0 ? channels[0] : null;
         }
 
-        private static TemplateEntity getTemplate(Enums.ChannelType channelType)
+        private TemplateEntity getTemplate(Enums.ChannelType channelType)
         {
             if (channelType == Enums.ChannelType.Email)
                 return emailTemplateEntity;
@@ -118,7 +124,7 @@ namespace SendARaven.Services
             return requestConfig;
         }
 
-        public static async Task SendMessages(SendMessageRequest request)
+        public async Task SendMessages(SendMessageRequest request)
         {
             var recipients = getListOfRecipients(request.Recipients);
 

@@ -9,9 +9,8 @@ namespace SendARaven.Models
 
     public class RegisterUserChannelRequest
     {
-        public String userId { get; set; }
-        public String channelName { get; set; }
-        public String channelType { get; set; }
+        public String UserId { get; set; }
+        public Enums.ChannelType ChannelType { get; set; }
         public String UserChannelId { get; set; }
     }
 }

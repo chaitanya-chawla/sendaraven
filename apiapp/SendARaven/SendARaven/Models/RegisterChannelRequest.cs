@@ -20,9 +20,7 @@ namespace SendARaven.Models
 
         [Required]
         public Enums.ChannelProvider ChannelProvider { get; set; }
-
-        [Required]
-        public int Status { get; set; }
+        
 
         [Required]
         public Dictionary<String, String> ChannelConfig { get; set; }

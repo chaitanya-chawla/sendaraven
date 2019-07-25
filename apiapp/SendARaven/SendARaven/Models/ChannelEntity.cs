@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace SendARaven.Models
 {
@@ -33,6 +34,19 @@ namespace SendARaven.Models
             Status = status;
         }
 
+        //public ChannelEntity(string tenantId, string channelName, Enums.ChannelType channelType, string templateId,
+        //    Enums.ChannelProvider channelProvider, int status, String channelConfig)
+        //{
+        //    TenantId = tenantId;
+        //    ChannelName = channelName;
+        //    ChannelType = channelType;
+        //    TemplateId = templateId;
+        //    ChannelProvider = channelProvider;
+        //    Status = status;
+        //    chanconfig = channelConfig;
+
+        //}
+
         [StringLength(128), Column("tenantId")]
         public String TenantId { get; set; }
 
@@ -51,7 +65,19 @@ namespace SendARaven.Models
         [Column("status")]
         public int Status { get; set; }
         
-        [NotMapped, Column("channelConfig")]
+        [Column("channelConfig")]
+        public String chanconfig
+        {
+            get { return JsonConvert.SerializeObject(ChannelConfig); }
+
+            set
+            {
+                
+                    ChannelConfig = JsonConvert.DeserializeObject<Dictionary<String, String>>(value);
+            }
+        }
+
+        [NotMapped]
         public Dictionary<String, String> ChannelConfig { get; set; }
 
     }

@@ -27,6 +27,15 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         public ChannelEntity Register([FromBody]RegisterChannelRequest request)
         {
+
+            var tenantId = Request.Headers.GetValues("x-tenant-id").First();
+            var channelEntity = new ChannelEntity(tenantId, request.ChannelName, request.ChannelType, request.TemplateId, request.ChannelProvider, 1, request.ChannelConfig);
+            using (var context = new EntityDbContext())
+            {
+                context.ChannelEntities.Add(channelEntity);
+                context.SaveChanges();
+            }
+
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -42,7 +51,14 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         public List<ChannelEntity> List()
         {
-            return null;
+            List<ChannelEntity> channels;
+            var tenantId = Request.Headers.GetValues("x-tenant-id").First();
+            using (var context = new EntityDbContext())
+            {
+                channels = context.ChannelEntities.Where(channel=>channel.TenantId==tenantId).ToList();
+            }
+
+            return channels;
         }
 
     }

@@ -35,27 +35,32 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [HttpGet]
-        [Route("GetByUserId/{id}")]
         public UserEntity GetByUserId(String id)
         {
             GetHeaders();
+            var tenantId = Request.Headers.GetValues("x-tenant-id").First();
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return dbCoreService.GetUserEntity(id);
+            return dbCoreService.GetUserEntity(id, tenantId);
         }
 
         // POST /v1/api/user/Register/
         [SwaggerOperation("register")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpPost]
-        [Route("register")]
         public void Register([FromBody]RegisterUserRequest request)
         {
             GetHeaders(request);
-            dbCoreService.SaveUserEntity();
+            var tenantId = Request.Headers.GetValues("x-tenant-id").First();
+            UserEntity user = new UserEntity(request.userId, tenantId, request.attributes);
+            using (var context = new EntityDbContext())
+            {
+                context.UserEntities.Add(user);
+                context.SaveChanges();
+            }
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -67,9 +72,16 @@ namespace SendARaven.Controllers
         [SwaggerOperation("channelRegister")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpPost]
-        [Route("channelRegister")]
         public void RegisterChannel([FromBody] RegisterUserChannelRequest request)
         {
+            var tenantId = Request.Headers.GetValues("x-tenant-id").First();
+            var userChannelInformation = new UserChannelInformation(request.ChannelType, request.UserChannelId, request.UserId, tenantId);
+            using (var context = new EntityDbContext())
+            {
+                context.UserChannelInformations.Add(userChannelInformation);
+                context.SaveChanges();
+            }
+
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
