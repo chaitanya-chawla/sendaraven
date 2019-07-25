@@ -36,7 +36,7 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [HttpGet]
         [Route("GetByUserId/{id}")]
-        public User1 GetByUserId(String id)
+        public UserEntity GetByUserId(String id)
         {
             GetHeaders();
             if (!ModelState.IsValid)

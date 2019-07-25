@@ -5,42 +5,35 @@ using System.Web;
 
 namespace SendARaven.Controllers.service
 {
-    using System.Data.Entity;
     using Models;
 
-    public class DbInitializers : NullDatabaseInitializer<EntityDbContext>
+    public class DbInitializers 
     {
-        public override void InitializeDatabase(EntityDbContext context)
-        {
-            base.InitializeDatabase(context);
-//            GetDeveloperRegisterEntities().ForEach(c => context.DeveloperRegisterEntities.Add(c));
-//             GetUser1().ForEach(c => context.Users.Add(c));
-//            context.SaveChanges();
-        }
+       
         //        protected override void Seed(EntityDbContext context)
         //        {
-        //            GetDeveloperRegisterEntities().ForEach( c => context.DeveloperRegisterEntities.Add(c));
+        //            GetDeveloperRegisterEntities().ForEach( c => context.TenantDetailsEntities.Add(c));
         //             GetUser1().ForEach(c => context.Users.Add(c));
         //            context.SaveChanges();
         //        }
 
 
 
-        public List<DeveloperRegisterEntity>  GetDeveloperRegisterEntities()
+        public List<TenantDetailsEntity>  GetDeveloperRegisterEntities()
         {
-            var categories = new List<DeveloperRegisterEntity>
+            var categories = new List<TenantDetailsEntity>
             {
-                new DeveloperRegisterEntity("1","2","3","4","222")
+                new TenantDetailsEntity("1","2","3","4","222")
 
             };
             return categories;
         }
 
-        public List<User1> GetUser1()
+        public List<UserEntity> GetUser1()
         {
-            var users = new List<User1>
+            var users = new List<UserEntity>
             {
-                new User1
+                new UserEntity
                 {
                     UserId = "u111",
                     TenantId = "tete",
