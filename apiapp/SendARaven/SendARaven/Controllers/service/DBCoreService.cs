@@ -5,8 +5,17 @@ using System.Web;
 
 namespace SendARaven.Controllers.service
 {
+    using System.Data.SqlClient;
+    using System.Runtime.InteropServices;
     using System.Security.Cryptography;
     using Models;
+    using Newtonsoft.Json;
+
+    public static class DbCoreServiceFactory
+    {
+        public static DBCoreService coreService = new DBCoreService();
+    }
+
 
     public class DBCoreService
     {
@@ -43,24 +52,66 @@ namespace SendARaven.Controllers.service
         }
 
 
-        public User1 SaveUserEntity()
+        public User1 SaveUserEntity(RegisterUserRequest request)
         {
-            String apikey = Guid.NewGuid().ToString();
-            Dictionary<String, String> a 
-                = new Dictionary<String, String>();
-            a.Add("a","b");
-            a.Add("a1", "b1");
-
             User1 entity = new User1() {
-                UserId = apikey ,
-                TenantId = "1212",
-                Attributes = a
+                UserId = request.userId,
+                TenantId = request.tenantId,
+                Attributes = request.attributes
                 };
+//
+//            var idParam = new SqlParameter[]{
+//                new SqlParameter
+//                {
+//                    ParameterName = "userId",
+//                    Value = entity.UserId
+//                },
+//                    new SqlParameter
+//                    {
+//                        ParameterName = "tenantId",
+//                        Value = entity.TenantId
+//                    },
+//                    new SqlParameter
+//                    {
+//                    ParameterName = "json",
+//                    Value = entity.Attributes,
+//                    }
+//            }
+            ;
 
-            var query = this.dbContext.Users.Add(entity);
-            this.dbContext.SaveChanges();
+            try
+            {
+                dbContext.Database.SqlQuery<User1>("exec dbo.InsertUser @userId, @tenantId, @json ",
+                        new SqlParameter
+                        {
+                            ParameterName = "userId",
+                            Value = entity.UserId
+                        }, new SqlParameter
+                        {
+                            ParameterName = "tenantId",
+                            Value = entity.TenantId
+                        },
+                        new SqlParameter
+                        {
+                            ParameterName = "json",
+                            Value = JsonConvert.SerializeObject(entity.Attributes)
+                        }
+
+                    )
+                    .ToList<User1>();
+            }
+            catch (Exception e)
+            {
+                Console.Write("exception while saving ", e);
+            }
+
+
+            //            var query = this.dbContext.Users.Add(entity);
+            //            this.dbContext.SaveChanges();
+            //            
+            //            return query;
             
-            return query;
+            return entity;
 
         }
 
@@ -70,12 +121,18 @@ namespace SendARaven.Controllers.service
             var query = this.dbContext.Users.First(p => p.UserId == userId);
 
             this.dbContext.SaveChanges();
-
             return query;
 
         }
 
 
+        public DeveloperRegisterEntity GetDevEntityEmail(String email)
+        {
+
+            var query = this.dbContext.DeveloperRegisterEntities.First(p => p.Email == email);
+            return query;
+
+        }
 
         public DeveloperRegisterEntity GetDevEntity(String tenantID)
         {
@@ -85,5 +142,11 @@ namespace SendARaven.Controllers.service
 
         }
 
+        public List<User1> GetUsers(string querySt)
+        {
+            List<User1> result = new List<User1>(dbContext.Set<User1>().SqlQuery(querySt));
+            return result;
+
+        }
     }
 }

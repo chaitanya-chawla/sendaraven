@@ -25,6 +25,6 @@ namespace SendARaven.Models
 
         public Dictionary<String, Object> mobile { get; set; }
 
-        public Dictionary<String, Object> attributes { get; set; }
+        public Dictionary<String, String> attributes { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace SendARaven.Controllers
         public void Register([FromBody]RegisterUserRequest request)
         {
             GetHeaders(request);
-            dbCoreService.SaveUserEntity();
+            dbCoreService.SaveUserEntity(request);
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);

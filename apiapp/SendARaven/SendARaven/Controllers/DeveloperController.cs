@@ -33,15 +33,15 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [HttpGet]
-        [Route("GetByTenantId")]
-        public DeveloperRegisterEntity GetByTenantId(String tenantId )
+        [Route("whoAmI")]
+        public DeveloperRegisterEntity GetByTenantId(String emailId )
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new DeveloperRegisterEntity();
+            return DbCoreServiceFactory.coreService.GetDevEntityEmail(emailId);
         }
 
         // POST /v1/api/developer

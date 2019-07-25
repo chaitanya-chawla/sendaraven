@@ -17,7 +17,8 @@ namespace SendARaven.Controllers
     /**
      * Note @{BaseURl} = /v1/api/message
      */
-    public class MessageController : ApiController
+    [RoutePrefix("v1/api/message")]
+    public class MessageController : BaseController
     {
 
         //API END POINT => /v1/api/message/Send
@@ -25,6 +26,7 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         [SwaggerResponse(HttpStatusCode.OK)]
         [HttpPost]
+        [Route("send")]
         public async Task Send([FromBody]SendMessageRequest request)
         {
             if (!ModelState.IsValid)

@@ -12,6 +12,9 @@ using RestSharp.Extensions;
 
 namespace SendARaven.Services
 {
+    using System.IdentityModel.Protocols.WSTrust;
+    using Controllers.service;
+
     public class SendMessageService
     {
         private static TemplateEntity smsTemplateEntity = new TemplateEntity()
@@ -53,11 +56,35 @@ namespace SendARaven.Services
             List<User1> allreceivers=new List<User1>();
             if (!String.IsNullOrWhiteSpace(recipients.UserId))
             {
-                // fetch user from database
+                //Fetching by user Id 
+                User1 user = DbCoreServiceFactory.coreService.GetUserEntity(recipients.UserId);
+                allreceivers.Add(user);
             }
             else
             {
-                // fetch list of users from database;
+                //Fetching by Filter Logic
+                string query = "select *  from user1 where ";
+
+                if (recipients.Attributes?.Count == 0)
+                {
+                    throw new InvalidRequestException("Attributes should defined");
+                }
+
+                int loop = 0;
+                int endPoint = recipients.Attributes.Count;
+                foreach (KeyValuePair<String, String> attr in recipients.Attributes)
+                {
+                    query = query + " ( JSON_VALUE(attributes, '$."+ attr.Key+ " ') " +  " = " + "'" + attr.Value  + "' ) ";
+
+                    if (loop != endPoint - 1)
+                    {
+                        query = query + " and "; 
+                    }
+
+                    loop++;
+                }
+                List< User1> users = DbCoreServiceFactory.coreService.GetUsers(query);
+                allreceivers = (users);
             }
 
             foreach (var receiver in allreceivers)

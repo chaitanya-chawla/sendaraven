@@ -34,7 +34,7 @@ namespace SendARaven.Models
 
       
         // The JSON column
-        [Required , Display(Name = "attributes"), Column("attributes")]
+        [NotMapped]
         public String atr
         {
             get { return JsonConvert.SerializeObject(Attributes); }
@@ -45,6 +45,8 @@ namespace SendARaven.Models
             }
         }
 
+        //[Required, Display(Name = "attr_json"), Column("attr_json", TypeName = "json")]
+        //[Required, Display(Name = "attributes"), Column("attributes", TypeName = "json")]
         [NotMapped]
         public Dictionary<string, string> Attributes { get; set; }
 
