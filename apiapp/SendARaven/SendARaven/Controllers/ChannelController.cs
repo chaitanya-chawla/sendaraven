@@ -16,7 +16,6 @@ namespace SendARaven.Controllers
     /**
      * Note @{BaseURl} = /v1/api/channel
      */
-    [RoutePrefix("v1/api/channel")]
     public class ChannelController : ApiController
     {
 
@@ -26,8 +25,6 @@ namespace SendARaven.Controllers
         [SwaggerOperation("Register")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [SwaggerResponse(HttpStatusCode.OK)]
-        [HttpPost]
-        [Route("register")]
         public ChannelEntity Register([FromBody]RegisterChannelRequest request)
         {
             if (!ModelState.IsValid)
@@ -43,8 +40,6 @@ namespace SendARaven.Controllers
         [SwaggerOperation("List")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.Created)]
-        [Route("list")]
-        [HttpGet]
         public List<ChannelEntity> List()
         {
             return null;

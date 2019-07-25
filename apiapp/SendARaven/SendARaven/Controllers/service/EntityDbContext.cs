@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SendARaven.Models;
 
@@ -24,11 +25,22 @@ namespace SendARaven.Controllers.service
         {
             optionsBuilder.UseSqlServer(connectionString2);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ChannelEntity>().HasKey(entity => new { entity.TenantId, entity.ChannelName});
+            modelBuilder.Entity<UserEntity>().HasKey(entity => new { entity.TenantId, entity.UserId });
+
+            modelBuilder.Entity<TenantDetailsEntity>().HasData(DummyObjects.tenant);
+            modelBuilder.Entity<UserEntity>().HasData(new List<UserEntity> {DummyObjects.user1, DummyObjects.user2});
+            modelBuilder.Entity<ChannelEntity>().HasData(new List<ChannelEntity>
+                {DummyObjects.emailChannel, DummyObjects.smsChannel});
+        }
         
 
         public DbSet<TenantDetailsEntity> TenantDetailsEntities { get; set; }
         public DbSet<UserEntity> UserEntities { get; set; }
-        //public DbSet<ChannelEntity> ChannelEntities { get; set; }
+        public DbSet<ChannelEntity> ChannelEntities { get; set; }
         //public DbSet<TemplateEntity> TemplateEntities { get; set; }
 
     }

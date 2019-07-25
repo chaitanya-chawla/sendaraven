@@ -245,7 +245,7 @@
     <Compile Include="Controllers\service\DbInitializers.cs" />
     <Compile Include="Controllers\service\EntityDbContext.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\DeveloperController.cs" />
+    <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -262,6 +262,10 @@
     <Compile Include="Migrations\20190725090327_changetableuser2.designer.cs">
       <DependentUpon>20190725090327_changetableuser2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190725133422_tableswithoutjson.cs" />
+    <Compile Include="Migrations\20190725133422_tableswithoutjson.designer.cs">
+      <DependentUpon>20190725133422_tableswithoutjson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\EntityDbContextModelSnapshot.cs" />
     <Compile Include="Models\ChannelEntity.cs" />
     <Compile Include="Models\Enums.cs" />
@@ -271,6 +275,7 @@
     <Compile Include="Models\RegisterUserChannelRequest.cs" />
     <Compile Include="Models\HeaderRequestBase.cs" />
     <Compile Include="Models\RegisterUserRequest.cs" />
+    <Compile Include="Models\SeedData.cs" />
     <Compile Include="Models\TenantDetailsEntity.cs" />
     <Compile Include="Models\ResisterDeveloperRequest.cs" />
     <Compile Include="Models\SendMessageRequest.cs" />

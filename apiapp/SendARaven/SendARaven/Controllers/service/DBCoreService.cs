@@ -34,7 +34,7 @@ namespace SendARaven.Controllers.service
             String apikey = Guid.NewGuid().ToString();
 
             String tenantKey = Guid.NewGuid().ToString();
-            TenantDetailsEntity entity = new TenantDetailsEntity(apikey,tenantKey, request.Email,request.CompanyName,request.Name);
+            TenantDetailsEntity entity = new TenantDetailsEntity(apikey,tenantKey, request.Email,request.CompanyName);
             
             var query = this.dbContext.TenantDetailsEntities.Add(entity).Entity;
             this.dbContext.SaveChanges();

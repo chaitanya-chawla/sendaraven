@@ -16,7 +16,7 @@ namespace SendARaven
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "v1/api/{controller}/{id}",
+                routeTemplate: "v1/api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

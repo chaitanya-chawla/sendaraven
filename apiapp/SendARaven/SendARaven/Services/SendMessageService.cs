@@ -14,6 +14,13 @@ namespace SendARaven.Services
 {
     public class SendMessageService
     {
+        private string TenantId;
+
+        public SendMessageService(string tenantId)
+        {
+            this.TenantId = tenantId;
+        }
+
         private static TemplateEntity smsTemplateEntity = new TemplateEntity()
         {
             TemplateId = "smsTemplate1",
@@ -57,12 +64,12 @@ namespace SendARaven.Services
             }
             else
             {
-                // fetch list of users from database;
+                // fetch list of all users from database based on the attribute given;
             }
 
             foreach (var receiver in allreceivers)
             {
-                receiver.ChannelsInformation.Where(channel=> recipients.ChannelTypes.Contains(channel.ChannelType));
+                receiver.ChannelsInformation= receiver.ChannelsInformation.Where(channel=> recipients.ChannelTypes.Contains(channel.ChannelType)).ToList();
             }
             // for all receivers keep only the relevant channels in the list recipients channels.
 
@@ -75,9 +82,10 @@ namespace SendARaven.Services
             return allreceivers;
         }
 
-        private static ChannelEntity getChannel(Enums.ChannelType channelType,
-            Enums.ChannelProvider channelProvider, string tenantId)
+        private static ChannelEntity getActiveChannelByType(Enums.ChannelType channelType)
         {
+            // from the database get a list of all channels for tenant for which status is active that is 1.
+            // There maybe multiple. return any 1 of them.
             return null;
         }
 
@@ -102,10 +110,10 @@ namespace SendARaven.Services
                 requestConfig.Add("subject", request.subject);
             }
 
-            if (request.htmlBody != null)
-            {
-                requestConfig.Add("htmlBody", request.htmlBody);
-            }
+            //if (request.htmlBody != null)
+            //{
+            //    requestConfig.Add("htmlBody", request.htmlBody);
+            //}
 
             return requestConfig;
         }
@@ -118,13 +126,13 @@ namespace SendARaven.Services
             {
                 foreach (var userChannelInformation in recipient.ChannelsInformation)
                 {
-                    var channel = getChannel(userChannelInformation.ChannelType,
-                        userChannelInformation.ChannelProvider, request.TenantId);
+                    var channel = getActiveChannelByType(userChannelInformation.ChannelType);
+                    // here ideally we should fetch template by template id and not 
                     TemplateEntity template = getTemplate(channel.ChannelType);
 
                     var channelConfig = channel.ChannelConfig;
                     var requestConfig = getRequestConfig(request);
-                    var userConfig = recipient.Attributes;
+                    var userConfig = new Dictionary<string, string>(recipient.Attributes); // This will be null for guests
 
                     userConfig.Add("userChannelId",userChannelInformation.UserChannelId);
                     configureTemplate(template, channelConfig, userConfig, requestConfig);

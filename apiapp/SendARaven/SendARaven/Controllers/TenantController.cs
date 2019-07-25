@@ -17,13 +17,12 @@ namespace SendARaven.Controllers
     /**
      * Note @{BaseURl} = /v1/api/developer
      */
-    [RoutePrefix("v1/api/developer")]
-    public class DeveloperController : BaseController
+    public class TenantController : BaseController
     {
 
         protected DBCoreService dbCoreService;
 
-        protected DeveloperController()
+        protected TenantController()
         {
             this.dbCoreService = new DBCoreService();
         }
@@ -33,7 +32,6 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [HttpGet]
-        [Route("GetByTenantId")]
         public TenantDetailsEntity GetByTenantId(String tenantId )
         {
             if (!ModelState.IsValid)

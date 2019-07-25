@@ -27,6 +27,7 @@ namespace SendARaven.Controllers
         [HttpPost]
         public async Task Send([FromBody]SendMessageRequest request)
         {
+
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);

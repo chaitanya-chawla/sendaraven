@@ -10,8 +10,28 @@ namespace SendARaven.Models
     [Table("channel_entity")]
     public class ChannelEntity
     {
-        [Key]
-        public String ChannelId { get; set; }
+        public ChannelEntity(string tenantId, string channelName, Enums.ChannelType channelType, string templateId,
+            Enums.ChannelProvider channelProvider, int status, Dictionary<string, string> channelConfig)
+        {
+            TenantId = tenantId;
+            ChannelName = channelName;
+            ChannelType = channelType;
+            TemplateId = templateId;
+            ChannelProvider = channelProvider;
+            Status = status;
+            ChannelConfig = channelConfig;
+        }
+
+        public ChannelEntity(string tenantId, string channelName, Enums.ChannelType channelType, string templateId,
+            Enums.ChannelProvider channelProvider, int status)
+        {
+            TenantId = tenantId;
+            ChannelName = channelName;
+            ChannelType = channelType;
+            TemplateId = templateId;
+            ChannelProvider = channelProvider;
+            Status = status;
+        }
 
         [StringLength(128), Column("tenantId")]
         public String TenantId { get; set; }
@@ -26,25 +46,12 @@ namespace SendARaven.Models
         public String TemplateId { get; set; }
 
         [Column("channelProvider")]
-        public Enums.ChannelProvider ChannelProvider;
+        public Enums.ChannelProvider ChannelProvider { get; set; }
 
-        [StringLength(128), Column("status")]
-        public int Status;
-
-        public ChannelEntity(string id, string tenantId, string channelName, Enums.ChannelType channelType, string templateId,
-            Enums.ChannelProvider channelProvider, int status, Dictionary<string, string> channelConfig)
-        {
-            ChannelId = id;
-            TenantId = tenantId;
-            ChannelName = channelName;
-            ChannelType = channelType;
-            TemplateId = templateId;
-            ChannelProvider = channelProvider;
-            Status = status;
-            ChannelConfig = channelConfig;
-        }
-
-        [StringLength(128), Column("channelConfig")]
+        [Column("status")]
+        public int Status { get; set; }
+        
+        [NotMapped, Column("channelConfig")]
         public Dictionary<String, String> ChannelConfig { get; set; }
 
     }

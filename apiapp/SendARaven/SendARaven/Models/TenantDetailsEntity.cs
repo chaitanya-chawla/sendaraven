@@ -15,13 +15,12 @@ namespace SendARaven.Models
         {
         }
 
-        public TenantDetailsEntity(string apiKey, string tenantId, string email, string companyName, string tenantName)
+        public TenantDetailsEntity(string apiKey, string tenantId, string email, string companyName)
         {
             ApiKey = apiKey;
             TenantId = tenantId;
             Email = email;
             CompanyName = companyName;
-            TenantName = tenantName;
         }
 
         [Required, StringLength(128), Display(Name = "apiKey"), Column("apiKey")]
@@ -36,9 +35,6 @@ namespace SendARaven.Models
 
         [Required, StringLength(128), Display(Name = "companyName"), Column("companyName")]
         public String CompanyName { get; set; }
-
-        [Required, StringLength(128), Display(Name = "tenantName"), Column("tenantName")]
-        public String TenantName { get; set; }
 
     }
 }

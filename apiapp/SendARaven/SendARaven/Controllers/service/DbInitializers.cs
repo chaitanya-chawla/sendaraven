@@ -23,7 +23,6 @@ namespace SendARaven.Controllers.service
         {
             var categories = new List<TenantDetailsEntity>
             {
-                new TenantDetailsEntity("1","2","3","4","222")
 
             };
             return categories;
