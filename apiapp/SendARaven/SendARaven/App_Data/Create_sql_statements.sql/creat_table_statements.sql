@@ -37,3 +37,18 @@ AS BEGIN
     values(@userId,@tenantId, @json)
 END
 
+
+EXEC InsertUser 'user_3', 'tenant1', '{"city":"Bangalore","zipcode":"454446"}'; 
+EXEC InsertUser 'user_4', 'tenant4', '{"city":"Dhar","zipcode":"454446"}' ;
+
+
+select userId, JSON_VALUE(attributes, '$.city'), JSON_VALUE(attributes, '$.zipcode') as zipcode
+from user1;
+
+select * from user1 where JSON_VALUE(attributes, '$.zipcode') = 454446;
+
+select * from user1 where JSON_VALUE(attributes, '$.city') = 'Dhar';
+
+
+
+
