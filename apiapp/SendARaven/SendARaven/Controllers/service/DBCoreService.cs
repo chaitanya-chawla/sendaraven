@@ -20,12 +20,19 @@ namespace SendARaven.Controllers.service
 
         public List<TenantDetailsEntity> ListDeveloperRegisterEntities()
         {
-            this.dbContext.Database.BeginTransaction();
-            IQueryable<TenantDetailsEntity> query = this.dbContext.TenantDetailsEntities;
+            List<TenantDetailsEntity> allTenants;
+            using (var context = new EntityDbContext())
+            {
+                allTenants = context.TenantDetailsEntities.ToList(); 
+            }
 
-            var list =  query.ToList();
-            this.dbContext.Database.CurrentTransaction.Commit();
-            return list;
+            return allTenants;
+            //this.dbContext.Database.BeginTransaction();
+            //IQueryable<TenantDetailsEntity> query = this.dbContext.TenantDetailsEntities;
+
+            //var list =  query.ToList();
+            //this.dbContext.Database.CurrentTransaction.Commit();
+            //return list;
         }
 
         public TenantDetailsEntity SaveDevEntity(ResisterDeveloperRequest request )
@@ -34,11 +41,16 @@ namespace SendARaven.Controllers.service
             String apikey = Guid.NewGuid().ToString();
 
             String tenantKey = Guid.NewGuid().ToString();
-            TenantDetailsEntity entity = new TenantDetailsEntity(apikey,tenantKey, request.Email,request.CompanyName);
-            
-            var query = this.dbContext.TenantDetailsEntities.Add(entity).Entity;
-            this.dbContext.SaveChanges();
-            return query;
+
+            TenantDetailsEntity tenant = new TenantDetailsEntity(apikey, tenantKey, request.Email, request.CompanyName);
+
+            using (var context = new EntityDbContext())
+            {
+                context.TenantDetailsEntities.Add(tenant);
+                context.SaveChanges();
+            }
+
+            return tenant;
 
         }
 
