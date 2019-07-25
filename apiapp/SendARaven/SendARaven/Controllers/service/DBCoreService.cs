@@ -59,25 +59,7 @@ namespace SendARaven.Controllers.service
                 TenantId = request.tenantId,
                 Attributes = request.attributes
                 };
-//
-//            var idParam = new SqlParameter[]{
-//                new SqlParameter
-//                {
-//                    ParameterName = "userId",
-//                    Value = entity.UserId
-//                },
-//                    new SqlParameter
-//                    {
-//                        ParameterName = "tenantId",
-//                        Value = entity.TenantId
-//                    },
-//                    new SqlParameter
-//                    {
-//                    ParameterName = "json",
-//                    Value = entity.Attributes,
-//                    }
-//            }
-            ;
+
 
             try
             {

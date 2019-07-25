@@ -16,6 +16,8 @@ insert into developer VALUES('api_tenant1_id2','tenant2','tenant2@microsoft.com'
 
 DROP TABLE user1;
 
+DROP TABLE user1; 
+
 create table user1 (
   userId varchar(128),
   tenantId varchar(128),
@@ -24,6 +26,14 @@ create table user1 (
   PRIMARY KEY (userId)
 );
 
-insert into user1 VALUES('ganu453','tenant1','{\"a\":\"b\",\"a1\":\"b1\"}')
-insert into user1 VALUES('chaitanya','tenant1','{\"a\":\"b\",\"a1\":\"b1\"}')
-insert into user1 VALUES('ritu','tenant1','{\"a\":\"b\",\"a1\":\"b1\"}')
+
+
+DROP PROCEDURE InsertUser;
+
+go
+CREATE PROCEDURE InsertUser(@userId nvarchar(200),@tenantId nvarchar(200) , @json nvarchar(max))
+AS BEGIN
+    insert into user1(userId,tenantId, attributes)
+    values(@userId,@tenantId, @json)
+END
+
