@@ -51,15 +51,16 @@ namespace SendARaven.Controllers
         [HttpPost]
         public DeveloperRegisterEntity Register([FromBody] ResisterDeveloperRequest request)
         {
-            GetHeaders(request,false);
+            //GetHeaders(request,false);
 
-            if (!ModelState.IsValid || request.apiKey != null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
+            //if (!ModelState.IsValid || request.apiKey != null)
+            //{
+            //    throw new HttpResponseException(HttpStatusCode.BadRequest);
+            //}
             
-            return dbCoreService.SaveDevEntity(request);
-            
+            //return dbCoreService.SaveDevEntity(request);
+            return DummyObjects.tenant;
+
         }
 
        

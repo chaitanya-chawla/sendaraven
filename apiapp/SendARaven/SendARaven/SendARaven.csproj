@@ -219,6 +219,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChannelEntity.cs" />
+    <Compile Include="Models\DummyObjects.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\GuestInformation.cs" />
     <Compile Include="Models\Recipients.cs" />

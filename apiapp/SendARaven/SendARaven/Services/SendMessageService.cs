@@ -54,31 +54,43 @@ namespace SendARaven.Services
             if (!String.IsNullOrWhiteSpace(recipients.UserId))
             {
                 // fetch user from database
+                allreceivers.Add(DummyObjects.getUser1());
             }
             else
             {
                 // fetch list of users from database;
+                allreceivers.Add(DummyObjects.getUser1());
+                allreceivers.Add(DummyObjects.getUser2());
             }
 
-            foreach (var receiver in allreceivers)
+            for (int i = 0; i < allreceivers.Count; i++)
             {
-                receiver.ChannelsInformation.Where(channel=> recipients.ChannelTypes.Contains(channel.ChannelType));
+
+                IEnumerable<UserChannelInformation> a = allreceivers[i].ChannelsInformation.Where(channel => recipients.ChannelTypes.Contains(channel.ChannelType));
+                allreceivers[i].ChannelsInformation = a.ToList();
             }
             // for all receivers keep only the relevant channels in the list recipients channels.
 
-            foreach (var guest in recipients.Guests)
-            {
-                var user = new User1();
-                user.ChannelsInformation.Add(guest);
-                allreceivers.Add(user);
-            }
+            //foreach (var guest in recipients.Guests)
+            //{
+            //    var user = new User1();
+            //    user.ChannelsInformation.Add(guest);
+            //    allreceivers.Add(user);
+            //}
             return allreceivers;
         }
 
         private static ChannelEntity getChannel(Enums.ChannelType channelType,
             Enums.ChannelProvider channelProvider, string tenantId)
         {
-            return null;
+            if (channelType == Enums.ChannelType.Email)
+            {
+                return DummyObjects.emailChannel;
+            }
+            else
+            {
+                return DummyObjects.smsChannel;
+            }
         }
 
         private static TemplateEntity getTemplate(Enums.ChannelType channelType)
@@ -112,14 +124,14 @@ namespace SendARaven.Services
 
         public static async Task SendMessages(SendMessageRequest request)
         {
-            var recipients = getListOfRecipients(request.Recipients);
+            var recipients = getListOfRecipients(request.recipients);
 
             foreach (var recipient in recipients)
             {
                 foreach (var userChannelInformation in recipient.ChannelsInformation)
                 {
                     var channel = getChannel(userChannelInformation.ChannelType,
-                        userChannelInformation.ChannelProvider, request.TenantId);
+                        userChannelInformation.ChannelProvider, request.tenantId);
                     TemplateEntity template = getTemplate(channel.ChannelType);
 
                     var channelConfig = channel.ChannelConfig;
@@ -128,6 +140,7 @@ namespace SendARaven.Services
 
                     userConfig.Add("userChannelId",userChannelInformation.UserChannelId);
                     configureTemplate(template, channelConfig, userConfig, requestConfig);
+                    userConfig.Remove("userChannelId");
                     var status = await sendRequest(template);
                     Console.Out.WriteLine(status);
                 }

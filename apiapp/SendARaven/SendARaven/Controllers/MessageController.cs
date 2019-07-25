@@ -17,6 +17,7 @@ namespace SendARaven.Controllers
     /**
      * Note @{BaseURl} = /v1/api/message
      */
+    [RoutePrefix("v1/api/message")]
     public class MessageController : ApiController
     {
 
@@ -25,13 +26,15 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         [SwaggerResponse(HttpStatusCode.OK)]
         [HttpPost]
-        public async Task Send([FromBody]SendMessageRequest request)
+        [Route("send")]
+        public async Task<SuccessResponse> Send([FromBody]SendMessageRequest request)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
             await SendMessageService.SendMessages(request);
+            return new SuccessResponse();
         }
 
     }

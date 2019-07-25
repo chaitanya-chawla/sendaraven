@@ -52,14 +52,16 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpPost]
         [Route("register")]
-        public void Register([FromBody]RegisterUserRequest request)
+        public SuccessResponse Register([FromBody]RegisterUserRequest request)
         {
-            GetHeaders(request);
-            dbCoreService.SaveUserEntity();
-            if (!ModelState.IsValid)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
+            //GetHeaders(request);
+            //dbCoreService.SaveUserEntity();
+            //if (!ModelState.IsValid)
+            //{
+            //    throw new HttpResponseException(HttpStatusCode.BadRequest);
+            //}
+
+            return new SuccessResponse();
 
         }
 
@@ -68,13 +70,14 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpPost]
         [Route("channelRegister")]
-        public void RegisterChannel([FromBody] RegisterUserChannelRequest request)
+        public SuccessResponse RegisterChannel([FromBody] RegisterUserChannelRequest request)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
+            return new SuccessResponse();
         }
 
     }

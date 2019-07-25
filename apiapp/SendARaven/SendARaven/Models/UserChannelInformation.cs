@@ -7,8 +7,15 @@ namespace SendARaven.Models
 {
     public class UserChannelInformation
     {
-        public Enums.ChannelType ChannelType;
-        public Enums.ChannelProvider ChannelProvider;
-        public string UserChannelId;
+        public Enums.ChannelType ChannelType { get; set; }
+        public Enums.ChannelProvider ChannelProvider { get; set; }
+        public string UserChannelId { get; set; }
+
+        public UserChannelInformation(Enums.ChannelType channelType, Enums.ChannelProvider channelProvider, string userChannelId)
+        {
+            ChannelType = channelType;
+            ChannelProvider = channelProvider;
+            UserChannelId = userChannelId;
+        }
     }
 }

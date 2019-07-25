@@ -8,15 +8,16 @@ namespace SendARaven.Models
 {
     public class SendMessageRequest
     {
+        [Required]
         public String subject { get; set; }
         
         public String textBody { get; set; }
         
         public String htmlBody { get; set; }
 
-        public Recipients Recipients;
+        public Recipients recipients { get; set; }
 
-        public string TenantId;
+        public string tenantId { get; set; }
 
 
     }

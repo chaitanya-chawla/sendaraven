@@ -30,12 +30,20 @@ namespace SendARaven.Controllers
         [Route("register")]
         public ChannelEntity Register([FromBody]RegisterChannelRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    throw new HttpResponseException(HttpStatusCode.BadRequest);
+            //}
 
-            return null;
+            //return null;
+            if (request.ChannelType == Enums.ChannelType.Sms)
+            {
+                return DummyObjects.smsChannel;
+            }
+            else
+            {
+                return DummyObjects.emailChannel;
+            }
         }
 
 
