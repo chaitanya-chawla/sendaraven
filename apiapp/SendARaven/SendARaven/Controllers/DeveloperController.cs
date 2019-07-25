@@ -34,14 +34,14 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [HttpGet]
         [Route("GetByTenantId")]
-        public DeveloperRegisterEntity GetByTenantId(String tenantId )
+        public TenantDetailsEntity GetByTenantId(String tenantId )
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return new DeveloperRegisterEntity();
+            return new TenantDetailsEntity();
         }
 
         // POST /v1/api/developer
@@ -49,7 +49,7 @@ namespace SendARaven.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [HttpPost]
-        public DeveloperRegisterEntity Register([FromBody] ResisterDeveloperRequest request)
+        public TenantDetailsEntity Register([FromBody] ResisterDeveloperRequest request)
         {
             GetHeaders(request,false);
 
@@ -67,7 +67,7 @@ namespace SendARaven.Controllers
         [SwaggerOperation("connect")]
         [SwaggerResponse(HttpStatusCode.Created)]
         [HttpGet]
-        public List<DeveloperRegisterEntity> Connect()
+        public List<TenantDetailsEntity> Connect()
         {
             var a = dbCoreService.ListDeveloperRegisterEntities();
         

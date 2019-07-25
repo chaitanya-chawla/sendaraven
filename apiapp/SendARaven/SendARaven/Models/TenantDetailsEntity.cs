@@ -9,13 +9,13 @@ namespace SendARaven.Models
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("developer")]
-    public class DeveloperRegisterEntity
+    public class TenantDetailsEntity
     {
-        public DeveloperRegisterEntity()
+        public TenantDetailsEntity()
         {
         }
 
-        public DeveloperRegisterEntity(string apiKey, string tenantId, string email, string companyName, string tenantName)
+        public TenantDetailsEntity(string apiKey, string tenantId, string email, string companyName, string tenantName)
         {
             ApiKey = apiKey;
             TenantId = tenantId;

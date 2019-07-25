@@ -9,14 +9,14 @@ namespace SendARaven.Models
     using Newtonsoft.Json;
 
 
-    [Table("user1")]
-    public class User1
+    [Table("myuser")]
+    public class UserEntity
     {
-        public User1()
+        public UserEntity()
         {
         }
 
-        public User1(string userId, Dictionary<string, string> attributes, List<UserChannelInformation> channelsInformation, string tenantId)
+        public UserEntity(string userId, Dictionary<string, string> attributes, List<UserChannelInformation> channelsInformation, string tenantId)
         {
             UserId = userId;
             Attributes = attributes;

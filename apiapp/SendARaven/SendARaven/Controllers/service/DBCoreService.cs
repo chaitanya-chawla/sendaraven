@@ -18,32 +18,32 @@ namespace SendARaven.Controllers.service
         }
 
 
-        public List<DeveloperRegisterEntity> ListDeveloperRegisterEntities()
+        public List<TenantDetailsEntity> ListDeveloperRegisterEntities()
         {
             this.dbContext.Database.BeginTransaction();
-            IQueryable<DeveloperRegisterEntity> query = this.dbContext.DeveloperRegisterEntities;
+            IQueryable<TenantDetailsEntity> query = this.dbContext.TenantDetailsEntities;
 
             var list =  query.ToList();
             this.dbContext.Database.CurrentTransaction.Commit();
             return list;
         }
 
-        public DeveloperRegisterEntity SaveDevEntity(ResisterDeveloperRequest request )
+        public TenantDetailsEntity SaveDevEntity(ResisterDeveloperRequest request )
         {
 
             String apikey = Guid.NewGuid().ToString();
 
             String tenantKey = Guid.NewGuid().ToString();
-            DeveloperRegisterEntity entity = new DeveloperRegisterEntity(apikey,tenantKey, request.Email,request.CompanyName,request.Name);
+            TenantDetailsEntity entity = new TenantDetailsEntity(apikey,tenantKey, request.Email,request.CompanyName,request.Name);
             
-            var query = this.dbContext.DeveloperRegisterEntities.Add(entity);
+            var query = this.dbContext.TenantDetailsEntities.Add(entity).Entity;
             this.dbContext.SaveChanges();
             return query;
 
         }
 
 
-        public User1 SaveUserEntity()
+        public UserEntity SaveUserEntity()
         {
             String apikey = Guid.NewGuid().ToString();
             Dictionary<String, String> a 
@@ -51,23 +51,23 @@ namespace SendARaven.Controllers.service
             a.Add("a","b");
             a.Add("a1", "b1");
 
-            User1 entity = new User1() {
+            UserEntity entity = new UserEntity() {
                 UserId = apikey ,
                 TenantId = "1212",
                 Attributes = a
                 };
 
-            var query = this.dbContext.Users.Add(entity);
+            var query = this.dbContext.UserEntities.Add(entity).Entity;
             this.dbContext.SaveChanges();
             
             return query;
 
         }
 
-        public User1 GetUserEntity(string userId)
+        public UserEntity GetUserEntity(string userId)
         {
 
-            var query = this.dbContext.Users.First(p => p.UserId == userId);
+            var query = this.dbContext.UserEntities.First(p => p.UserId == userId);
 
             this.dbContext.SaveChanges();
 
@@ -77,10 +77,10 @@ namespace SendARaven.Controllers.service
 
 
 
-        public DeveloperRegisterEntity GetDevEntity(String tenantID)
+        public TenantDetailsEntity GetDevEntity(String tenantID)
         {
 
-            var query = this.dbContext.DeveloperRegisterEntities.First(p => p.TenantId == tenantID);
+            var query = this.dbContext.TenantDetailsEntities.First(p => p.TenantId == tenantID);
             return query;
 
         }

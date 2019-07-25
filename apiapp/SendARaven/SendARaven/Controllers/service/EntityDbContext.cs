@@ -1,43 +1,35 @@
 ﻿using System;
-using System.Web;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using SendARaven.Models;
 
 namespace SendARaven.Controllers.service
 {
-    using Models;
-    using DbContext = System.Data.Entity.DbContext;
 
     public class EntityDbContext : DbContext
     {
+        string s1 = "Server=tcp:sendaraventestsql.database.windows.net,1433;Initial Catalog=raven;Persist Security Info=False;" +
+                    "User ID=ganesh;Password=Bangalore@123;" +
+                    "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
-        public EntityDbContext()
+        private String connectionString =
+            "Server=tcp:sendaraventestsql.database.windows.net,1433;" +
+            "Initial Catalog=hack19test2;Persist Security Info=False;" +
+            "User ID=ganesh;Password=Bangalore@123;" +
+            "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        private String connectionString2 =
+            "Server=tcp:sendravenserver.database.windows.net,1433;Initial Catalog=sendaraven;Persist Security Info=False;User ID=chaitanya;Password=Bangalore@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string s1 = "Server=tcp:sendaraventestsql.database.windows.net,1433;Initial Catalog=raven;Persist Security Info=False;" +
-                        "User ID=ganesh;Password=Bangalore@123;" +
-                        "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            String s2 =
-                "Server=tcp:sendaraventestsql.database.windows.net,1433;" +
-                "Initial Catalog=hack19test2;Persist Security Info=False;" +
-                "User ID=ganesh;Password=Bangalore@123;" +
-                "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
-            this.Database.Connection.ConnectionString = s1;
-
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<DeveloperRegisterEntity>().ToTable("developer");
-            modelBuilder.Entity<User1>().ToTable("user1");
-            
-
-
+            optionsBuilder.UseSqlServer(connectionString2);
         }
         
 
-        public DbSet<DeveloperRegisterEntity> DeveloperRegisterEntities { get; set; }
-        
-        public DbSet<User1> Users { get; set; }
+        public DbSet<TenantDetailsEntity> TenantDetailsEntities { get; set; }
+        public DbSet<UserEntity> UserEntities { get; set; }
+        //public DbSet<ChannelEntity> ChannelEntities { get; set; }
+        //public DbSet<TemplateEntity> TemplateEntities { get; set; }
 
     }
 }
