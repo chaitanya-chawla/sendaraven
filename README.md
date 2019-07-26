@@ -8,6 +8,6 @@ The idea of the project is to provide a simple unified API to send SMS/Email/Pus
 <h1>docs</h1>
 Contains Postman Collections for API. Just imprt collection to postman and use it - 
 <br/>&nbsp;<br/>
-   1. **Hack19LocalApi.postman_collection.json**
+   1. Hack19LocalApi.postman_collection.json
  
 <br/>&nbsp;<br/>
