@@ -24,39 +24,48 @@ namespace SendARaven.Services
             this.tenantId = tenantId;
         }
 
-        private TemplateEntity smsTemplateEntity = new TemplateEntity()
+        private TemplateEntity GetSmsTemplateEntity()
         {
-            TemplateId = "smsTemplate1",
-            Body = "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.userChannelId\"\r\n      ]\r\n    }\r\n  ]\r\n}",
-            ChannelProvider = Enums.ChannelProvider.Msg91,
-            ChannelType = Enums.ChannelType.Sms,
-            Headers = new Dictionary<string, string>
+            return new TemplateEntity()
             {
-                {"authkey", "$config.apiKey"},
-                {"content-type", "application/json"}
-            },
-            MandatoryConfigKeys = new List<string> { "apiKey", "senderId" },
-            Status = 1,
-            UrlEndpoint = "https://api.msg91.com/api/v2/sendsms?country=91",
-            UrlMethod = Method.POST
-        };
+                TemplateId = "smsTemplate1",
+                Body =
+                    "{\r\n  \"sender\": \"$config.senderId\",\r\n  \"route\": \"4\",\r\n  \"country\": \"91\",\r\n  \"sms\": [\r\n    {\r\n      \"message\": \"$req.textBody\",\r\n      \"to\": [\r\n        \"$req-user.userChannelId\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+                ChannelProvider = Enums.ChannelProvider.Msg91,
+                ChannelType = Enums.ChannelType.Sms,
+                Headers = new Dictionary<string, string>
+                {
+                    {"authkey", "$config.apiKey"},
+                    {"content-type", "application/json"}
+                },
+                MandatoryConfigKeys = new List<string> {"apiKey", "senderId"},
+                Status = 1,
+                UrlEndpoint = "https://api.msg91.com/api/v2/sendsms?country=91",
+                UrlMethod = Method.POST
+            };
 
-        private TemplateEntity emailTemplateEntity = new TemplateEntity()
+        }
+
+        private TemplateEntity GetEmailTemplateEntity()
         {
-            TemplateId = "emailTemplate1",
-            Body = "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.userChannelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}",
-            ChannelProvider = Enums.ChannelProvider.Sendgrid,
-            ChannelType = Enums.ChannelType.Email,
-            Headers = new Dictionary<string, string>
+            return new TemplateEntity()
             {
-                {"Authorization", "Bearer $config.apiKey"},
-                {"content-type", "application/json"}
-            },
-            MandatoryConfigKeys = new List<string> { "apiKey", "senderId" },
-            Status = 1,
-            UrlEndpoint = "https://api.sendgrid.com/v3/mail/send",
-            UrlMethod = Method.POST
-        };
+                TemplateId = "emailTemplate1",
+                Body = "{\r\n  \"personalizations\": [\r\n    {\r\n      \"to\": [\r\n        {\r\n          \"email\": \"$req-user.userChannelId\"\r\n        }\r\n      ],\r\n      \"subject\": \"$req.subject\"\r\n    }\r\n  ],\r\n  \"from\": {\r\n    \"email\": \"$config.senderId\"\r\n  },\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text/plain\",\r\n      \"value\": \"$req.textBody\"\r\n    }\r\n  ]\r\n}",
+                ChannelProvider = Enums.ChannelProvider.Sendgrid,
+                ChannelType = Enums.ChannelType.Email,
+                Headers = new Dictionary<string, string>
+                {
+                    {"Authorization", "Bearer $config.apiKey"},
+                    {"content-type", "application/json"}
+                },
+                MandatoryConfigKeys = new List<string> { "apiKey", "senderId" },
+                Status = 1,
+                UrlEndpoint = "https://api.sendgrid.com/v3/mail/send",
+                UrlMethod = Method.POST
+            };
+
+        }
 
         private List<UserEntity> getListOfRecipients(Recipients recipients)
         {
@@ -98,8 +107,8 @@ namespace SendARaven.Services
         private TemplateEntity getTemplate(Enums.ChannelType channelType)
         {
             if (channelType == Enums.ChannelType.Email)
-                return emailTemplateEntity;
-            return smsTemplateEntity;
+                return GetEmailTemplateEntity();
+            return GetSmsTemplateEntity();
         }
 
         private static Dictionary<string, string> getRequestConfig(SendMessageRequest request)
